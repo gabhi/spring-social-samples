@@ -32,3 +32,12 @@
 	<li><a href="<c:url value="/linkedin"/>">User Profile</a></li>
 </ul>
 </social:connected>
+
+<c:choose>
+    <c:when test="${empty account}">
+<a href="<c:url value="/signin" />">Log in</a>
+    </c:when>
+    <c:otherwise>
+<a href="<c:url value="/signout" />">Sign Out</a>
+    </c:otherwise>
+</c:choose>

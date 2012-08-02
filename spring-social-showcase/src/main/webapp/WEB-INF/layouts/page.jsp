@@ -42,7 +42,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="#">Project name</a>
+          <a class="brand" href="#">Social Log in</a>
           <div class="btn-group pull-right">
             <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
               <i class="icon-user"></i> Username
@@ -72,23 +72,7 @@
             <ul class="nav nav-list">
                           			<tiles:insertTemplate template="menu.jsp" />
 
-              <li class="nav-header">Sidebar</li>
-
-              <li class="active"><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>
-              <li class="nav-header">Sidebar</li>
-              <li><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>
-              <li class="nav-header">Sidebar</li>
-              <li><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>
+               
             </ul>
           </div><!--/.well -->
         </div><!--/span-->
@@ -104,7 +88,7 @@
       <hr>
 
       <footer>
-        <p>&copy; Company 2012</p>
+          <p>&copy; <a href="http://gabhi.com">Abhijit Gaikwad</a></p>
       </footer>
 
     </div><!--/.fluid-container-->

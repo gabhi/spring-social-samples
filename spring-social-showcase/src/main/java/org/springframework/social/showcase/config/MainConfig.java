@@ -15,16 +15,25 @@
  */
 package org.springframework.social.showcase.config;
 
+import java.util.Properties;
+
+import javax.inject.Inject;
 import javax.sql.DataSource;
 
+import org.apache.commons.dbcp.BasicDataSource;
+import org.apache.commons.dbcp.BasicDataSourceFactory;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.AnnotationConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ComponentScan.Filter;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseFactory;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.jdbc.datasource.init.DatabasePopulator;
@@ -42,16 +51,21 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @ComponentScan(basePackages = "org.springframework.social.showcase", excludeFilters = { @Filter(Configuration.class) })
 @PropertySource("classpath:org/springframework/social/showcase/config/application.properties")
+
 @EnableTransactionManagement
 public class MainConfig {
-
-	@Bean(destroyMethod = "shutdown")
-	public DataSource dataSource() {
-		EmbeddedDatabaseFactory factory = new EmbeddedDatabaseFactory();
-		factory.setDatabaseName("spring-social-showcase");
-		factory.setDatabaseType(EmbeddedDatabaseType.H2);
-		factory.setDatabasePopulator(databasePopulator());
-		return factory.getDatabase();
+	@Inject
+	private Environment environment;
+	
+	
+	@Bean(destroyMethod = "close")
+	public DataSource dataSource()    {
+		BasicDataSource dataSource = new BasicDataSource();
+        dataSource.setDriverClassName(environment.getProperty("jdbc.driverClassName"));
+        dataSource.setUrl(environment.getProperty("jdbc.url"));
+        dataSource.setUsername(environment.getProperty("jdbc.username"));
+        dataSource.setPassword(environment.getProperty("jdbc.password"));
+        return dataSource;
 	}
 	
 	@Bean
@@ -63,14 +77,14 @@ public class MainConfig {
 	public JdbcTemplate jdbcTemplate() {
 		return new JdbcTemplate(dataSource());
 	}
-
-	// internal helpers
-
-	private DatabasePopulator databasePopulator() {
-		ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
-		populator.addScript(new ClassPathResource("JdbcUsersConnectionRepository.sql", JdbcUsersConnectionRepository.class));
-		populator.addScript(new ClassPathResource("Account.sql", JdbcAccountRepository.class));
-		populator.addScript(new ClassPathResource("data.sql", JdbcAccountRepository.class));
-		return populator;
-	}
+	@Bean
+	public  SessionFactory sessionFactory() {
+	         
+		System.out.println("in the create session factory method");
+ 	            return new AnnotationConfiguration().configure().buildSessionFactory();
+ 
+	       
+	        
+	    }
+	
 }

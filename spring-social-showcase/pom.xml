@@ -91,7 +91,21 @@
 		    <artifactId>spring-social-web</artifactId>
 	        <version>${org.springframework.social-version}</version>
 	    </dependency>
-	    
+	    <dependency>
+  <groupId>org.hibernate</groupId>
+  <artifactId>hibernate-core</artifactId>
+  <version>3.5.1-Final</version>
+</dependency>
+<dependency>
+<groupId>commons-dbcp</groupId>
+<artifactId>commons-dbcp</artifactId>
+<version>1.2.2</version>
+</dependency>
+<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.6</version>
+		</dependency>
 	    <!-- Apache Http Client -->
 <!-- 	    <dependency>
 	    	<groupId>org.apache.httpcomponents</groupId>
@@ -117,6 +131,8 @@
 			<artifactId>hibernate-validator</artifactId>
 			<version>4.1.0.Final</version>
 		</dependency>
+		 
+    
 	    
 		<!-- Logging -->
 		<dependency>
@@ -204,8 +220,49 @@
 			<artifactId>jstl-impl</artifactId>
 			<version>1.2</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>3.6.3.Final</version>
+		</dependency>
+ 
+		<dependency>
+			<groupId>javassist</groupId>
+			<artifactId>javassist</artifactId>
+			<version>3.12.1.GA</version>
+		</dependency>
+	 <dependency>
+	  <groupId>org.eclipse.persistence</groupId>
+	  <artifactId>eclipselink</artifactId>
+	  <version>2.3.2</version>
+	 </dependency>
+	 <dependency>
+	  <groupId>org.eclipse.persistence</groupId>
+	  <artifactId>javax.persistence</artifactId>
+	  <version>2.0.3</version>
+	 </dependency>
+	 <dependency>
+	  <groupId>org.eclipse.persistence</groupId>
+	  <artifactId>org.eclipse.persistence.jpa.modelgen.processor</artifactId>
+	  <version>2.3.2</version>
+	  <scope>provided</scope>
+	 </dependency>
+	 <dependency>
+	  <groupId>javax.annotation</groupId>
+	  <artifactId>jsr250-api</artifactId>
+	  <version>1.0</version>
+	  <scope>provided</scope>
+	 </dependency>
 	</dependencies>
 	<repositories>
+	
+	<repository>
+			<id>JBoss repository</id>
+			<url>http://repository.jboss.org/nexus/content/groups/public/</url>
+		</repository>
+		
+		
 		<repository>
 			<id>org.springframework.maven.release</id>
 			<name>Spring Maven Release Repository</name>
@@ -228,6 +285,12 @@
 			<url>http://repo.springsource.org/milestone</url>
 			<snapshots><enabled>false</enabled></snapshots>
 		</repository>
+	 <repository>
+	  <url>http://download.eclipse.org/rt/eclipselink/maven.repo/</url>
+	  <id>eclipselink</id>
+	  <layout>default</layout>
+	  <name>Repository for library EclipseLink (JPA 2.0)</name>
+	 </repository>
 	</repositories>
 	<build>
 		<resources>

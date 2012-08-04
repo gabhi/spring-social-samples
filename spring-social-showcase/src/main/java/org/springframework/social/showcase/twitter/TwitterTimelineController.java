@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-public class TwitterTimelineController {
+public class TwitterTimelineController  {
 
     private final Twitter twitter;
 

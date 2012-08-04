@@ -32,9 +32,9 @@
         <li><a href="<c:url value="/linkedin"/>">User Profile</a></li>
     </ul>
 </social:connected>
-
+ ${pageContext['request'].userPrincipal.principal}
 <c:choose>
-    <c:when test="${empty account.firstName}">
+    <c:when test="${empty pageContext['request'].userPrincipal.principal}">
         <a href="<c:url value="/signin" />">Log in</a>
     </c:when>
     <c:otherwise>

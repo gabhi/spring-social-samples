@@ -28,7 +28,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class BaseController {
-	
 //	protected final Provider<ConnectionRepository> connectionRepositoryProvider;
 //	
 //	protected final AccountRepository accountRepository;
@@ -38,7 +37,4 @@ public class BaseController {
 //		this.connectionRepositoryProvider = connectionRepositoryProvider;
 //		this.accountRepository = accountRepository;
 //	}
-        
-
-	 
 }

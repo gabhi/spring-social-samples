@@ -26,23 +26,22 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class FacebookFeedController {
 
-	private final Facebook facebook;
+    private final Facebook facebook;
 
-	@Inject
-	public FacebookFeedController(Facebook facebook) {
-		this.facebook = facebook;
-	}
+    @Inject
+    public FacebookFeedController(Facebook facebook) {
+        this.facebook = facebook;
+    }
 
-	@RequestMapping(value="/facebook/feed", method=RequestMethod.GET)
-	public String showFeed(Model model) {
-		model.addAttribute("feed", facebook.feedOperations().getFeed());
-		return "facebook/feed";
-	}
-	
-	@RequestMapping(value="/facebook/feed", method=RequestMethod.POST)
-	public String postUpdate(String message) {
-		facebook.feedOperations().updateStatus(message);
-		return "redirect:/facebook/feed";
-	}
-	
+    @RequestMapping(value = "/facebook/feed", method = RequestMethod.GET)
+    public String showFeed(Model model) {
+        model.addAttribute("feed", facebook.feedOperations().getFeed());
+        return "facebook/feed";
+    }
+
+    @RequestMapping(value = "/facebook/feed", method = RequestMethod.POST)
+    public String postUpdate(String message) {
+        facebook.feedOperations().updateStatus(message);
+        return "redirect:/facebook/feed";
+    }
 }

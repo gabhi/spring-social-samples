@@ -3,34 +3,34 @@
 
 <tiles-definitions>
 
-	<definition name="twitter/profile" extends="page">
-            	<put-attribute name="topmenu" value="/WEB-INF/views/twitter/menu.jsp" />
+    <definition name="twitter/profile" extends="page">
+        <put-attribute name="topmenu" value="/WEB-INF/views/twitter/menu.jsp" />
 
-		<put-attribute name="content" value="/WEB-INF/views/twitter/profile.jsp" />
-	</definition>
+        <put-attribute name="content" value="/WEB-INF/views/twitter/profile.jsp" />
+    </definition>
 
-	<definition name="twitter/timeline" extends="page">
-            	<put-attribute name="topmenu" value="/WEB-INF/views/twitter/menu.jsp" />
+    <definition name="twitter/timeline" extends="page">
+        <put-attribute name="topmenu" value="/WEB-INF/views/twitter/menu.jsp" />
 
-		<put-attribute name="content" value="/WEB-INF/views/twitter/timeline.jsp" />
-	</definition>
+        <put-attribute name="content" value="/WEB-INF/views/twitter/timeline.jsp" />
+    </definition>
 
-	<definition name="twitter/friends" extends="page">
-            	<put-attribute name="topmenu" value="/WEB-INF/views/twitter/menu.jsp" />
+    <definition name="twitter/friends" extends="page">
+        <put-attribute name="topmenu" value="/WEB-INF/views/twitter/menu.jsp" />
 
-		<put-attribute name="content" value="/WEB-INF/views/twitter/friends.jsp" />
-	</definition>
+        <put-attribute name="content" value="/WEB-INF/views/twitter/friends.jsp" />
+    </definition>
 
-	<definition name="twitter/messages" extends="page">
-            	<put-attribute name="topmenu" value="/WEB-INF/views/twitter/menu.jsp" />
+    <definition name="twitter/messages" extends="page">
+        <put-attribute name="topmenu" value="/WEB-INF/views/twitter/menu.jsp" />
 
-		<put-attribute name="content" value="/WEB-INF/views/twitter/messages.jsp" />
-	</definition>
+        <put-attribute name="content" value="/WEB-INF/views/twitter/messages.jsp" />
+    </definition>
 
-	<definition name="twitter/dailyTrends" extends="page">
-            	<put-attribute name="topmenu" value="/WEB-INF/views/twitter/menu.jsp" />
+    <definition name="twitter/dailyTrends" extends="page">
+        <put-attribute name="topmenu" value="/WEB-INF/views/twitter/menu.jsp" />
 
-		<put-attribute name="content" value="/WEB-INF/views/twitter/dailyTrends.jsp" />
-	</definition>
+        <put-attribute name="content" value="/WEB-INF/views/twitter/dailyTrends.jsp" />
+    </definition>
 
 </tiles-definitions>

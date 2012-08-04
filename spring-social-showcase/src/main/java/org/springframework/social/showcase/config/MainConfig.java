@@ -44,47 +44,49 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
- * Main configuration class for the application.
- * Turns on @Component scanning, loads externalized application.properties, and sets up the database.
+ * Main configuration class for the application. Turns on
+ *
+ * @Component scanning, loads externalized application.properties, and sets up
+ * the database.
  * @author Craig Walls
  */
 @Configuration
-@ComponentScan(basePackages = "org.springframework.social.showcase", excludeFilters = { @Filter(Configuration.class) })
+@ComponentScan(basePackages = "org.springframework.social.showcase", excludeFilters = {
+    @Filter(Configuration.class)})
 @PropertySource("classpath:org/springframework/social/showcase/config/application.properties")
-
 @EnableTransactionManagement
 public class MainConfig {
-	@Inject
-	private Environment environment;
-	
-	
-	@Bean(destroyMethod = "close")
-	public DataSource dataSource()    {
-		BasicDataSource dataSource = new BasicDataSource();
+
+    @Inject
+    private Environment environment;
+
+    @Bean(destroyMethod = "close")
+    public DataSource dataSource() {
+        BasicDataSource dataSource = new BasicDataSource();
         dataSource.setDriverClassName(environment.getProperty("jdbc.driverClassName"));
         dataSource.setUrl(environment.getProperty("jdbc.url"));
         dataSource.setUsername(environment.getProperty("jdbc.username"));
         dataSource.setPassword(environment.getProperty("jdbc.password"));
         return dataSource;
-	}
-	
-	@Bean
-	public PlatformTransactionManager transactionManager() {
-		return new DataSourceTransactionManager(dataSource());
-	}
-	
-	@Bean
-	public JdbcTemplate jdbcTemplate() {
-		return new JdbcTemplate(dataSource());
-	}
-	@Bean
-	public  SessionFactory sessionFactory() {
-	         
-		System.out.println("in the create session factory method");
- 	            return new AnnotationConfiguration().configure().buildSessionFactory();
- 
-	       
-	        
-	    }
-	
+    }
+
+    @Bean
+    public PlatformTransactionManager transactionManager() {
+        return new DataSourceTransactionManager(dataSource());
+    }
+
+    @Bean
+    public JdbcTemplate jdbcTemplate() {
+        return new JdbcTemplate(dataSource());
+    }
+
+    @Bean
+    public SessionFactory sessionFactory() {
+
+        System.out.println("in the create session factory method");
+        return new AnnotationConfiguration().configure().buildSessionFactory();
+
+
+
+    }
 }

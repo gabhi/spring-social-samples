@@ -103,17 +103,17 @@
         </dependency>
         <!-- Apache Http Client -->
         <!-- 	    <dependency>
-                 	    	<groupId>org.apache.httpcomponents</groupId>
-                 	    	<artifactId>httpclient</artifactId>
-                 	    	<version>4.1.2</version>
-                            			<exclusions>
-                                   				Exclude Commons Logging in favor of SLF4j
-                                   				<exclusion>
-                                          					<groupId>commons-logging</groupId>
-                                          					<artifactId>commons-logging</artifactId>
-                                   				</exclusion>
-                            			</exclusions>	    	
-              	    </dependency>
+                          	    	<groupId>org.apache.httpcomponents</groupId>
+                          	    	<artifactId>httpclient</artifactId>
+                          	    	<version>4.1.2</version>
+                                             			<exclusions>
+                                                            				Exclude Commons Logging in favor of SLF4j
+                                                            				<exclusion>
+                                                                           					<groupId>commons-logging</groupId>
+                                                                           					<artifactId>commons-logging</artifactId>
+                                                            				</exclusion>
+                                             			</exclusions>	    	
+               	    </dependency>
         -->	    
         <!-- JSR 303 with Hibernate Validator -->
         <dependency>

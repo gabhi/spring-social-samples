@@ -6,38 +6,38 @@
 
 <h4><a href="<c:url value="/twitter"/>">Twitter</a></h4>
 <social:connected provider="twitter">
-<ul class="menu">
-	<li><a href="<c:url value="/twitter"/>">User Profile</a></li>
-	<li><a href="<c:url value="/twitter/timeline"/>">Timeline</a></li>
-	<li><a href="<c:url value="/twitter/friends"/>">Friends</a></li>
-	<li><a href="<c:url value="/twitter/followers"/>">Followers</a></li>
-	<li><a href="<c:url value="/twitter/messages"/>">Messages</a></li>
-	<li><a href="<c:url value="/twitter/trends/daily"/>">Daily Trends</a></li>
-</ul>
+    <ul class="menu">
+        <li><a href="<c:url value="/twitter"/>">User Profile</a></li>
+        <li><a href="<c:url value="/twitter/timeline"/>">Timeline</a></li>
+        <li><a href="<c:url value="/twitter/friends"/>">Friends</a></li>
+        <li><a href="<c:url value="/twitter/followers"/>">Followers</a></li>
+        <li><a href="<c:url value="/twitter/messages"/>">Messages</a></li>
+        <li><a href="<c:url value="/twitter/trends/daily"/>">Daily Trends</a></li>
+    </ul>
 </social:connected>
 
 <h4><a href="<c:url value="/facebook"/>">Facebook</a></h4>
 <social:connected provider="facebook">
-<ul class="menu">
-	<li><a href="<c:url value="/facebook"/>">User Profile</a></li>
-	<li><a href="<c:url value="/facebook/feed"/>">Feed</a></li>
-	<li><a href="<c:url value="/facebook/friends"/>">Friends</a></li>
-	<li><a href="<c:url value="/facebook/albums"/>">Albums</a></li>
-</ul>
+    <ul class="menu">
+        <li><a href="<c:url value="/facebook"/>">User Profile</a></li>
+        <li><a href="<c:url value="/facebook/feed"/>">Feed</a></li>
+        <li><a href="<c:url value="/facebook/friends"/>">Friends</a></li>
+        <li><a href="<c:url value="/facebook/albums"/>">Albums</a></li>
+    </ul>
 </social:connected>
 
 <h4><a href="<c:url value="/linkedin"/>">LinkedIn</a></h4>
 <social:connected provider="linkedin">
-<ul class="menu">
-	<li><a href="<c:url value="/linkedin"/>">User Profile</a></li>
-</ul>
+    <ul class="menu">
+        <li><a href="<c:url value="/linkedin"/>">User Profile</a></li>
+    </ul>
 </social:connected>
 
 <c:choose>
     <c:when test="${empty account.firstName}">
-<a href="<c:url value="/signin" />">Log in</a>
+        <a href="<c:url value="/signin" />">Log in</a>
     </c:when>
     <c:otherwise>
-<a href="<c:url value="/signout" />">Sign Out</a>
+        <a href="<c:url value="/signout" />">Sign Out</a>
     </c:otherwise>
 </c:choose>

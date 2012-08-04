@@ -25,18 +25,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class TwitterTrendsController {
-	
-	private final Twitter twitter;
 
-	@Inject
-	public TwitterTrendsController(Twitter twitter) {
-		this.twitter = twitter;
-	}
+    private final Twitter twitter;
 
-	@RequestMapping(value="/twitter/trends/daily", method=RequestMethod.GET)
-	public String showTrends(Model model) {
-		model.addAttribute("trends", twitter.searchOperations().getDailyTrends().get(0));
-		return "twitter/dailyTrends";
-	}
-	
+    @Inject
+    public TwitterTrendsController(Twitter twitter) {
+        this.twitter = twitter;
+    }
+
+    @RequestMapping(value = "/twitter/trends/daily", method = RequestMethod.GET)
+    public String showTrends(Model model) {
+        model.addAttribute("trends", twitter.searchOperations().getDailyTrends().get(0));
+        return "twitter/dailyTrends";
+    }
 }

@@ -13,6 +13,8 @@
     <meta name="author" content="">
 
     <!-- Le styles -->
+        <link href="${pageContext.request.contextPath}/resources/assets/css/bootstrap.css" rel="stylesheet">
+
     <link href="${pageContext.request.contextPath}/resources/bootstrap/css/bootstrap.css" rel="stylesheet">
     <style type="text/css">
       body {
@@ -78,6 +80,11 @@
         </div><!--/span-->
         <div class="span9">
           <div class="hero-unit">
+             
+
+ 
+            
+      
             			<tiles:insertAttribute name="content" />
 
           </div>
@@ -96,6 +103,19 @@
     <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
+    <script type="text/javascript">
+     
+
+$('.nav li').click(function(e) {
+$('.navbar li').removeClass('active');
+var $this = $(this);
+if (!$this.hasClass('active')) {
+$this.addClass('active');
+}
+e.preventDefault();
+});
+
+    </script>
 <script src="${pageContext.request.contextPath}/resources/assets/js/jquery.js"></script>
 <script src="${pageContext.request.contextPath}/resources/assets/js/bootstrap-transition.js"></script>
 <script src="${pageContext.request.contextPath}/resources/assets/js/bootstrap-alert.js"></script>

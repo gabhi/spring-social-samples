@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS `Account` (
   `password` varchar(32) NOT NULL,
   `firstName` varchar(50) NOT NULL,
   `lastName` varchar(50) NOT NULL,
-  `roleName` varchar(40) NOT NULL,
+  `roleName` varchar(40) NOT NULL DEFAULT 'Traveler',
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;

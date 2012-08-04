@@ -18,9 +18,11 @@ package org.springframework.social.showcase.twitter;
 import java.security.Principal;
 
 import javax.inject.Inject;
+import javax.inject.Provider;
 
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionRepository;
+import org.springframework.social.showcase.account.AccountRepository;
 import org.springframework.social.twitter.api.Twitter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,9 +34,16 @@ public class TwitterProfileController {
 
 	@Inject
 	private ConnectionRepository connectionRepository;
-	
+		private final AccountRepository accountRepository;
+
+                @Inject
+	public TwitterProfileController(  AccountRepository accountRepository) {
+		this.accountRepository = accountRepository;
+	}
 	@RequestMapping(value="/twitter", method=RequestMethod.GET)
 	public String home(Principal currentUser, Model model) {
+            		model.addAttribute(accountRepository.findAccountByUsername(currentUser.getName()));
+
 		Connection<Twitter> connection = connectionRepository.findPrimaryConnection(Twitter.class);
 		if (connection == null) {
 			return "redirect:/connect/twitter";

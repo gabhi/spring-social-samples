@@ -34,7 +34,7 @@
 </social:connected>
 
 <c:choose>
-    <c:when test="${empty account}">
+    <c:when test="${empty account.firstName}">
 <a href="<c:url value="/signin" />">Log in</a>
     </c:when>
     <c:otherwise>

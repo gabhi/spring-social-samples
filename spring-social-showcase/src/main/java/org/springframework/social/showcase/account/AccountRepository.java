@@ -21,5 +21,4 @@ public interface AccountRepository {
 
     Account findAccountByUsername(String username);
 
-    Account findAccountByUsername(Account account);
 }

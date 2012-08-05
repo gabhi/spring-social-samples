@@ -74,8 +74,9 @@ public class SignupController {
     // internal helpers
     private Account createAccount(SignupForm form, BindingResult formBinding) {
         try {
-            String roleName = "TRAVELER";
-            Account account = new Account(form.getUsername(), form.getPassword(), form.getFirstName(), form.getLastName(), roleName);
+            String roleName = "ROLE_TRAVELER";
+            int enabled =1;
+            Account account = new Account(form.getUsername(), form.getPassword(), form.getFirstName(), form.getLastName(), roleName,enabled);
             accountRepository.createAccount(account);
             return account;
         } catch (UsernameAlreadyInUseException e) {

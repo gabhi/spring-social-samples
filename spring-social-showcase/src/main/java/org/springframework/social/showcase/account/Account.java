@@ -31,12 +31,13 @@ public class Account extends User implements Principal {
     private final String firstName;
     private final String lastName;
     private final String roleName;
+    private final int    enabled;
 
     public String getRoleName() {
         return roleName;
     }
 
-    public Account(String username, String password, String firstName, String lastName, final String roleName //,Set<GrantedAuthority> authorities
+    public Account(String username, String password, String firstName, String lastName, final String roleName, int enabled
             ) {
         super(username, "", new HashSet<GrantedAuthority>() {
             {
@@ -50,6 +51,7 @@ public class Account extends User implements Principal {
         this.firstName = firstName;
         this.lastName = lastName;
         this.roleName = roleName;
+        this.enabled = enabled;
     }
 
     public Account(String username, String password, boolean enabled,
@@ -62,6 +64,7 @@ public class Account extends User implements Principal {
         this.firstName = firstName;
         this.lastName = lastName;
         this.roleName = roleName;
+        this.enabled = enabled==true?1:0;
     }
 
     public String getUsername() {
@@ -111,7 +114,10 @@ public class Account extends User implements Principal {
     @Override
     public boolean isEnabled() {
         //TODO
+        if(enabled ==1)
         return true;
+        else
+            return false;
     }
 
     @Override

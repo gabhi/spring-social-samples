@@ -19,6 +19,7 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.springframework.http.HttpRequest;
 
 import org.springframework.security.web.WebAttributes;
 import org.springframework.security.web.savedrequest.RequestCache;
@@ -50,8 +51,9 @@ public class SimpleSignInAdapter implements SignInAdapter {
            //   Account userAccount =  jdbcAccountRepository.findAccountByUsername(localUserId);
               
        // SignInUtils.signin(localUserId,userAccount);
+       // requestCache.getRequest(null, null)
         System.out.print(accountRepository.findAccountByUsername(localUserId));
-         SignInUtils.signin(localUserId,accountRepository.findAccountByUsername(localUserId));
+         SignInUtils.signin(localUserId,accountRepository.findAccountByUsername(localUserId),request.getNativeRequest(HttpServletRequest.class));
         return extractOriginalUrl(request);
     }
 

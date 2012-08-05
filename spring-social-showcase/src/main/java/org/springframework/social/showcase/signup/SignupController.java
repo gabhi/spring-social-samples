@@ -16,6 +16,7 @@
 package org.springframework.social.showcase.signup;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.social.connect.Connection;
@@ -61,8 +62,10 @@ public class SignupController {
         }
         Account account = createAccount(form, formBinding);
         if (account != null) {
+            
+            //TODO replace null with httpservletrequest
             SignInUtils.signin(account.getUsername()
-                    ,account
+                    ,account, null
                     );
             ProviderSignInUtils.handlePostSignUp(account.getUsername(), request);
             return "redirect:/";

@@ -1,6 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="s" %>
 <%@ taglib uri="http://www.springframework.org/spring-social/social/tags" prefix="social" %>
+    <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <h4><a href="<c:url value="/connect"/>">Connections</a></h4>
 
@@ -32,7 +33,13 @@
         <li><a href="<c:url value="/linkedin"/>">User Profile</a></li>
     </ul>
 </social:connected>
- ${pageContext['request'].userPrincipal.principal}
+ ${pageContext['request'].userPrincipal}
+
+<br />
+Displaying Auth: <sec:authentication property="principal"/>
+
+
+
 <c:choose>
     <c:when test="${empty pageContext['request'].userPrincipal.principal}">
         <a href="<c:url value="/signin" />">Log in</a>

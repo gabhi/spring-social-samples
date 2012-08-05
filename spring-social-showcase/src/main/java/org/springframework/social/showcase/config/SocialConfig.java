@@ -103,6 +103,7 @@ private AccountRepository accountrepository;
         if (authentication == null) {
             throw new IllegalStateException("Unable to get a ConnectionRepository: no user signed in");
         }
+        System.out.println("authentication.getName():: "+ authentication.getName());
         return usersConnectionRepository().createConnectionRepository(authentication.getName());
     }
 

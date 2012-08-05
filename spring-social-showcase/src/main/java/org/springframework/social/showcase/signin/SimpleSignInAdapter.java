@@ -25,20 +25,33 @@ import org.springframework.security.web.savedrequest.RequestCache;
 import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.web.SignInAdapter;
+import org.springframework.social.showcase.account.Account;
+import org.springframework.social.showcase.account.AccountRepository;
+import org.springframework.social.showcase.account.JdbcAccountRepository;
 import org.springframework.web.context.request.NativeWebRequest;
 
 public class SimpleSignInAdapter implements SignInAdapter {
 
     private final RequestCache requestCache;
 
+    private final AccountRepository accountRepository;
+
+   
     @Inject
-    public SimpleSignInAdapter(RequestCache requestCache) {
+    public SimpleSignInAdapter(RequestCache requestCache
+            ,AccountRepository accountRepository
+            ) {
         this.requestCache = requestCache;
+        this.accountRepository=accountRepository;
     }
 
     @Override
     public String signIn(String localUserId, Connection<?> connection, NativeWebRequest request) {
-        SignInUtils.signin(localUserId);
+           //   Account userAccount =  jdbcAccountRepository.findAccountByUsername(localUserId);
+              
+       // SignInUtils.signin(localUserId,userAccount);
+        System.out.print(accountRepository.findAccountByUsername(localUserId));
+         SignInUtils.signin(localUserId,accountRepository.findAccountByUsername(localUserId));
         return extractOriginalUrl(request);
     }
 

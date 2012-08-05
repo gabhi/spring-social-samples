@@ -52,11 +52,11 @@ public class JdbcAccountRepository implements AccountRepository {
     }
 
     public Account findAccountByUsername(String username) {
-        return jdbcTemplate.queryForObject("select username, firstName, lastName from Account where username = ?",
+        return jdbcTemplate.queryForObject("select username, firstName, lastName, roleName from Account where username = ?",
                 new RowMapper<Account>() {
                     public Account mapRow(ResultSet rs, int rowNum) throws SQLException {
                         return new Account(rs.getString("username"), null, rs.getString("firstName"), rs
-                                .getString("lastName"));
+                                .getString("lastName"), rs.getString("roleName"));
                     }
                 }, username);
     }

@@ -23,9 +23,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.core.env.Environment;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.encrypt.Encryptors;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.savedrequest.RequestCache;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionFactoryLocator;
@@ -41,6 +43,8 @@ import org.springframework.social.facebook.connect.FacebookConnectionFactory;
 import org.springframework.social.facebook.web.DisconnectController;
 import org.springframework.social.linkedin.api.LinkedIn;
 import org.springframework.social.linkedin.connect.LinkedInConnectionFactory;
+import org.springframework.social.showcase.account.AccountRepository;
+import org.springframework.social.showcase.account.JdbcAccountRepository;
 import org.springframework.social.showcase.facebook.PostToWallAfterConnectInterceptor;
 import org.springframework.social.showcase.signin.SimpleSignInAdapter;
 import org.springframework.social.showcase.twitter.TweetAfterConnectInterceptor;
@@ -60,7 +64,13 @@ public class SocialConfig {
     private Environment environment;
     @Inject
     private DataSource dataSource;
-
+    @Inject
+    private JdbcTemplate jdbcTemplate;
+    @Inject
+    private PasswordEncoder passwordEncoder;
+    @Inject
+private AccountRepository accountrepository;
+    
     @Bean
     @Scope(value = "singleton", proxyMode = ScopedProxyMode.INTERFACES)
     public ConnectionFactoryLocator connectionFactoryLocator() {
@@ -78,6 +88,12 @@ public class SocialConfig {
     @Scope(value = "singleton", proxyMode = ScopedProxyMode.INTERFACES)
     public UsersConnectionRepository usersConnectionRepository() {
         return new JdbcUsersConnectionRepository(dataSource, connectionFactoryLocator(), Encryptors.noOpText());
+    }
+    
+    @Bean
+    @Scope(value = "singleton", proxyMode = ScopedProxyMode.INTERFACES)
+    public JdbcAccountRepository jdbcAccountRepository() {
+        return new JdbcAccountRepository(jdbcTemplate, passwordEncoder);
     }
 
     @Bean
@@ -121,7 +137,7 @@ public class SocialConfig {
 
     @Bean
     public ProviderSignInController providerSignInController(RequestCache requestCache) {
-        return new ProviderSignInController(connectionFactoryLocator(), usersConnectionRepository(), new SimpleSignInAdapter(requestCache));
+        return new ProviderSignInController(connectionFactoryLocator(), usersConnectionRepository(), new SimpleSignInAdapter(requestCache,accountrepository));
     }
 
     @Bean

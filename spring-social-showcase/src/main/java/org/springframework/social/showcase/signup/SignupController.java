@@ -61,7 +61,9 @@ public class SignupController {
         }
         Account account = createAccount(form, formBinding);
         if (account != null) {
-            SignInUtils.signin(account.getUsername());
+            SignInUtils.signin(account.getUsername()
+                    ,account
+                    );
             ProviderSignInUtils.handlePostSignUp(account.getUsername(), request);
             return "redirect:/";
         }
@@ -71,7 +73,8 @@ public class SignupController {
     // internal helpers
     private Account createAccount(SignupForm form, BindingResult formBinding) {
         try {
-            Account account = new Account(form.getUsername(), form.getPassword(), form.getFirstName(), form.getLastName());
+            String roleName = "TRAVELER";
+            Account account = new Account(form.getUsername(), form.getPassword(), form.getFirstName(), form.getLastName(), roleName);
             accountRepository.createAccount(account);
             return account;
         } catch (UsernameAlreadyInUseException e) {

@@ -21,12 +21,19 @@ public class Account {
     private final String password;
     private final String firstName;
     private final String lastName;
+        private final String roleName;
 
-    public Account(String username, String password, String firstName, String lastName) {
+    public String getRoleName() {
+        return roleName;
+    }
+
+
+    public Account(String username, String password, String firstName, String lastName,String roleName) {
         this.username = username;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.roleName = roleName;
     }
 
     public String getUsername() {

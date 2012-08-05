@@ -15,14 +15,37 @@
  */
 package org.springframework.social.showcase.signin;
 
+import javax.inject.Inject;
+import org.springframework.social.showcase.account.Account;
+import org.springframework.social.showcase.account.AccountRepository;
+import org.springframework.social.showcase.account.UsernameAlreadyInUseException;
+import org.springframework.social.showcase.signup.SignupForm;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class SigninController {
+ 
+     private final AccountRepository accountRepository;
 
+    @Inject
+    public SigninController(AccountRepository accountRepository) {
+        this.accountRepository = accountRepository;
+    }
+    
     @RequestMapping(value = "/signin", method = RequestMethod.GET)
     public void signin() {
     }
+    
+    // internal helpers
+    private Account getAccount(String username) {
+       
+            String roleName = "TRAVELER";
+            Account account =  accountRepository.findAccountByUsername(username);
+            return account;
+         
+    }
+    
 }

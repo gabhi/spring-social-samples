@@ -15,17 +15,38 @@
  */
 package org.springframework.social.showcase.signin;
 
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+import javax.inject.Inject;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.GrantedAuthorityImpl;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.social.showcase.account.Account;
+import org.springframework.social.showcase.account.AccountRepository;
 
 public class SignInUtils {
 
+     private   final AccountRepository accountRepository;
+
+    @Inject
+    public SignInUtils(AccountRepository accountRepository) {
+        this.accountRepository = accountRepository;
+    }
+    
     /**
      * Programmatically signs in the user with the given the user ID.
      */
-    public static void signin(String userId) {
+    public static void signin(String userId
+            ,Account account
+            ) {
+        System.out.print(userId+account.getRoleName());
+        Set < GrantedAuthority> auths = new HashSet<GrantedAuthority>();
+        auths.add(new GrantedAuthorityImpl(account.getRoleName()));
         
-        System.out.print(userId);
-        SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(userId, null, null));
+        SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(userId, null, auths));
     }
+    
+     
 }

@@ -23,8 +23,8 @@
         <authentication-provider>
             <password-encoder ref="passwordEncoder" />
             <jdbc-user-service data-source-ref="dataSource" 
-                                           users-by-username-query="select username, password, true from Account where username = ?"
-                                           authorities-by-username-query="select username, roleName from Account where username = ?"/>
+                               users-by-username-query="select username, password, true from Account where username = ?"
+                               authorities-by-username-query="select username, roleName from Account where username = ?"/>
         </authentication-provider>
     </authentication-manager>
 	

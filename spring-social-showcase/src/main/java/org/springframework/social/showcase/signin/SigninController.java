@@ -27,18 +27,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class SigninController {
- 
-     private final AccountRepository accountRepository;
+
+    private final AccountRepository accountRepository;
 
     @Inject
     public SigninController(AccountRepository accountRepository) {
         this.accountRepository = accountRepository;
     }
-    
+
     @RequestMapping(value = "/signin", method = RequestMethod.GET)
     public void signin() {
     }
-    
-     
-    
 }

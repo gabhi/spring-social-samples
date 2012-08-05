@@ -36,15 +36,16 @@ public class Account extends User implements Principal {
         return roleName;
     }
 
-    public Account(String username, String password, String firstName, String lastName, final String roleName
-            //,Set<GrantedAuthority> authorities
+    public Account(String username, String password, String firstName, String lastName, final String roleName //,Set<GrantedAuthority> authorities
             ) {
-        super(username,"",   new HashSet<GrantedAuthority>() {{
-    add(new GrantedAuthorityImpl(roleName));
- }});
-         
+        super(username, "", new HashSet<GrantedAuthority>() {
+            {
+                add(new GrantedAuthorityImpl(roleName));
+            }
+        });
+
         this.username = username;
-        
+
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;

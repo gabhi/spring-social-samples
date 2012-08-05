@@ -43,7 +43,7 @@ public class HomeController {
     public String home(Principal currentUser, Model model) {
         model.addAttribute("connectionsToProviders", getConnectionRepository().findAllConnections());
         model.addAttribute(accountRepository.findAccountByUsername(currentUser.getName()));
-         return "home";
+        return "home";
     }
 
     private ConnectionRepository getConnectionRepository() {

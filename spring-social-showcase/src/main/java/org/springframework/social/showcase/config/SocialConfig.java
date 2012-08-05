@@ -69,8 +69,8 @@ public class SocialConfig {
     @Inject
     private PasswordEncoder passwordEncoder;
     @Inject
-private AccountRepository accountrepository;
-    
+    private AccountRepository accountrepository;
+
     @Bean
     @Scope(value = "singleton", proxyMode = ScopedProxyMode.INTERFACES)
     public ConnectionFactoryLocator connectionFactoryLocator() {
@@ -89,7 +89,7 @@ private AccountRepository accountrepository;
     public UsersConnectionRepository usersConnectionRepository() {
         return new JdbcUsersConnectionRepository(dataSource, connectionFactoryLocator(), Encryptors.noOpText());
     }
-    
+
     @Bean
     @Scope(value = "singleton", proxyMode = ScopedProxyMode.INTERFACES)
     public JdbcAccountRepository jdbcAccountRepository() {
@@ -103,7 +103,7 @@ private AccountRepository accountrepository;
         if (authentication == null) {
             throw new IllegalStateException("Unable to get a ConnectionRepository: no user signed in");
         }
-        System.out.println("authentication.getName():: "+ authentication.getName());
+        System.out.println("authentication.getName():: " + authentication.getName());
         return usersConnectionRepository().createConnectionRepository(authentication.getName());
     }
 
@@ -138,7 +138,7 @@ private AccountRepository accountrepository;
 
     @Bean
     public ProviderSignInController providerSignInController(RequestCache requestCache) {
-        return new ProviderSignInController(connectionFactoryLocator(), usersConnectionRepository(), new SimpleSignInAdapter(requestCache,accountrepository));
+        return new ProviderSignInController(connectionFactoryLocator(), usersConnectionRepository(), new SimpleSignInAdapter(requestCache, accountrepository));
     }
 
     @Bean

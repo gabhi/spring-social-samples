@@ -34,26 +34,22 @@ import org.springframework.web.context.request.NativeWebRequest;
 public class SimpleSignInAdapter implements SignInAdapter {
 
     private final RequestCache requestCache;
-
     private final AccountRepository accountRepository;
 
-   
     @Inject
-    public SimpleSignInAdapter(RequestCache requestCache
-            ,AccountRepository accountRepository
-            ) {
+    public SimpleSignInAdapter(RequestCache requestCache, AccountRepository accountRepository) {
         this.requestCache = requestCache;
-        this.accountRepository=accountRepository;
+        this.accountRepository = accountRepository;
     }
 
     @Override
     public String signIn(String localUserId, Connection<?> connection, NativeWebRequest request) {
-           //   Account userAccount =  jdbcAccountRepository.findAccountByUsername(localUserId);
-              
-       // SignInUtils.signin(localUserId,userAccount);
-       // requestCache.getRequest(null, null)
+        //   Account userAccount =  jdbcAccountRepository.findAccountByUsername(localUserId);
+
+        // SignInUtils.signin(localUserId,userAccount);
+        // requestCache.getRequest(null, null)
         System.out.print(accountRepository.findAccountByUsername(localUserId));
-         SignInUtils.signin(localUserId,accountRepository.findAccountByUsername(localUserId),request.getNativeRequest(HttpServletRequest.class));
+        SignInUtils.signin(localUserId, accountRepository.findAccountByUsername(localUserId), request.getNativeRequest(HttpServletRequest.class));
         return extractOriginalUrl(request);
     }
 

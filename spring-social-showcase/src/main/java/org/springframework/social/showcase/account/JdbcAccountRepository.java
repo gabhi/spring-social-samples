@@ -53,7 +53,7 @@ public class JdbcAccountRepository implements AccountRepository {
 
     @Override
     public Account findAccountByUsername(String username) {
-        System.out.println("in the findAccountByUsername: "+ username);
+        System.out.println("in the findAccountByUsername: " + username);
         return jdbcTemplate.queryForObject("select username, firstName, lastName, roleName from Account where username = ?",
                 new RowMapper<Account>() {
                     public Account mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -62,18 +62,17 @@ public class JdbcAccountRepository implements AccountRepository {
                     }
                 }, username);
     }
-    
 
     @Override
     public Account findAccountByUsername(Account account) {
-        System.out.println("in the findAccountByUsername but by Account: "+ account.getUsername());
+        System.out.println("in the findAccountByUsername but by Account: " + account.getUsername());
         return jdbcTemplate.queryForObject("select username, firstName, lastName, roleName from Account where username = ?",
                 new RowMapper<Account>() {
                     public Account mapRow(ResultSet rs, int rowNum) throws SQLException {
                         return new Account(rs.getString("username"), null, rs.getString("firstName"), rs
                                 .getString("lastName"), rs.getString("roleName"));
                     }
-                }, account.getUsername());   
-    
+                }, account.getUsername());
+
     }
 }

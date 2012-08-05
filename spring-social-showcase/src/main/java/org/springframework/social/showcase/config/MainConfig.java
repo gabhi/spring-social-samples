@@ -15,7 +15,6 @@
  */
 package org.springframework.social.showcase.config;
 
-
 import javax.inject.Inject;
 import javax.sql.DataSource;
 

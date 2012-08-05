@@ -28,8 +28,6 @@ INSERT INTO `Account` VALUES(4, 'rclarkson', 'atlanta', 'Roy', 'Clarkson', 'ROLE
 INSERT INTO `Account` VALUES(5, 'abhijit', 'abhijit', 'abhijit', 'gaikwad', 'ROLE_JOBSEEKER', 1);
 
 
-
-
 -- --------------------------------------------------------
 
 --

@@ -47,13 +47,13 @@
                     <a class="brand" href="#">Social Log in</a>
                     <div class="btn-group pull-right">
                         <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="icon-user"></i> Username
+                            <i class="icon-user"></i> ${pageContext['request'].userPrincipal.principal.username}
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="#">Profile</a></li>
+                            <li><a href="<c:url value="/connect" />">Profile</a></li>
                             <li class="divider"></li>
-                            <li><a href="#">Sign Out</a></li>
+                            <li><a href="<c:url value="/signout" />">Sign Out</a></li>
                         </ul>
                     </div>
                     <div class="nav-collapse">

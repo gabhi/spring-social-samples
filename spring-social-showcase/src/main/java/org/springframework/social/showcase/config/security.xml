@@ -27,5 +27,7 @@
                                authorities-by-username-query="select username, roleName from Account where username = ?"/>
         </authentication-provider>
     </authentication-manager>
+    
+    
 	
 </beans:beans>

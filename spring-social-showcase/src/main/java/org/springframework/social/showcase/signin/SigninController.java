@@ -39,13 +39,6 @@ public class SigninController {
     public void signin() {
     }
     
-    // internal helpers
-    private Account getAccount(String username) {
-       
-            String roleName = "TRAVELER";
-            Account account =  accountRepository.findAccountByUsername(username);
-            return account;
-         
-    }
+     
     
 }

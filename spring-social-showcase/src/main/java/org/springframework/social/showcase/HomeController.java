@@ -21,6 +21,7 @@ import javax.inject.Inject;
 import javax.inject.Provider;
 
 import org.springframework.social.connect.ConnectionRepository;
+import org.springframework.social.showcase.account.Account;
 import org.springframework.social.showcase.account.AccountRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -42,7 +43,7 @@ public class HomeController {
     public String home(Principal currentUser, Model model) {
         model.addAttribute("connectionsToProviders", getConnectionRepository().findAllConnections());
         model.addAttribute(accountRepository.findAccountByUsername(currentUser.getName()));
-        return "home";
+         return "home";
     }
 
     private ConnectionRepository getConnectionRepository() {

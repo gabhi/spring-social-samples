@@ -51,4 +51,11 @@ public class Account {
     public String getLastName() {
         return lastName;
     }
+
+    @Override
+    public String toString() {
+        return this.username;
+    }
+    
+    
 }

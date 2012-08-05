@@ -51,6 +51,7 @@ public class JdbcAccountRepository implements AccountRepository {
         }
     }
 
+    @Override
     public Account findAccountByUsername(String username) {
         System.out.println("in the findAccountByUsername: "+ username);
         return jdbcTemplate.queryForObject("select username, firstName, lastName, roleName from Account where username = ?",
@@ -61,6 +62,7 @@ public class JdbcAccountRepository implements AccountRepository {
                     }
                 }, username);
     }
+    
 
     @Override
     public Account findAccountByUsername(Account account) {

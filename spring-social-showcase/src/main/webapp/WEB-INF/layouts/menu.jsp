@@ -33,18 +33,14 @@
         <li><a href="<c:url value="/linkedin"/>">User Profile</a></li>
     </ul>
 </social:connected>
- ${pageContext['request'].userPrincipal}
+  
+ 
 
-<br />
-Displaying Auth: <sec:authentication property="principal"/>
-
-
-
-<c:choose>
-    <c:when test="${empty pageContext['request'].userPrincipal.principal}">
-        <a href="<c:url value="/signin" />">Log in</a>
-    </c:when>
-    <c:otherwise>
+<sec:authorize access="isAuthenticated()">
         <a href="<c:url value="/signout" />">Sign Out</a>
-    </c:otherwise>
-</c:choose>
+</sec:authorize>
+<sec:authorize access="isAnonymous()">
+        <a href="<c:url value="/signin" />">Log in</a>
+</sec:authorize>
+
+

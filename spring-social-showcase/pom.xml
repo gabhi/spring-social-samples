@@ -19,6 +19,12 @@
         <netbeans.hint.deploy.server>Tomcat</netbeans.hint.deploy.server>
     </properties>
     <dependencies>
+        <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.8.1</version>
+      <scope>test</scope>
+    </dependency>
         <!-- Spring -->
         <dependency>
             <groupId>org.springframework</groupId>
@@ -250,6 +256,19 @@
             <version>1.0</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>6.5.2</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>3.2.0.BUILD-SNAPSHOT</version>
+            <scope>test</scope>
+            <type>jar</type>
+        </dependency>
     </dependencies>
     <repositories>
 	
@@ -329,9 +348,35 @@
             </plugin>
         </plugins>
     </build>
+    <profiles>
+        <profile>
+            <id>netbeans-private-testng</id>
+            <activation>
+                <property>
+                    <name>netbeans.testng.action</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+             <groupId>org.apache.maven.plugins</groupId>
+             <artifactId>maven-surefire-plugin</artifactId>
+             <version>2.12.1</version>
+             <dependencies>
+               <dependency>
+                 <groupId>org.apache.maven.surefire</groupId>
+                 <artifactId>surefire-junit47</artifactId>
+                 <version>2.12.1</version>
+               </dependency>
+             </dependencies>
+           </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
     <reporting>
         <plugins>
-           
+             
         </plugins>
     </reporting>
 </project>

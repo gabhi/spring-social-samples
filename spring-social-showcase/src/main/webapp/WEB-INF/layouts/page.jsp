@@ -51,9 +51,16 @@
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="<c:url value="/connect" />">Profile</a></li>
-                            <li class="divider"></li>
-                            <li><a href="<c:url value="/signout" />">Sign Out</a></li>
+                            <c:choose>
+                                <c:when test="${empty pageContext['request'].userPrincipal.principal}">
+                                    <li><a href="<c:url value="/signin" />">Sign In</a></li>  
+                                </c:when>
+                                <c:otherwise>
+                                    <li><a href="<c:url value="/connect" />">Profile</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="<c:url value="/signout" />">Sign Out</a></li>    </c:otherwise>
+                            </c:choose>
+
                         </ul>
                     </div>
                     <div class="nav-collapse">

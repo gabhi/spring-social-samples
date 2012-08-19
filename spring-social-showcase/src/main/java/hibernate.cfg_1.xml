@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+    <property name="hibernate.bytecode.use_reflection_optimizer">false</property>
+    <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+    <property name="hibernate.connection.password">root</property>
+    <property name="hibernate.connection.url">jdbc:mysql://localhost:8889/laga</property>
+    <property name="hibernate.connection.username">root</property>
+    <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+    <property name="show_sql">true</property>
+    <property name="hibernate.current_session_context_class">thread</property>
+    <!--   
+   <mapping class="org.springframework.social.showcase.jobseeker.Jobs" resource="org/springframework/social/showcase/jobseeker/Jobs.hbm.xml"></mapping>   
+      <mapping class="org.springframework.social.showcase.jobseeker.Account" resource="org/springframework/social/showcase/jobseeker/Account.hbm.xml"></mapping>   
+      <mapping class="org.springframework.social.showcase.jobseeker.UserConnection" resource="org/springframework/social/showcase/jobseeker/UserConnection.hbm.xml"></mapping>   
+    -->
+    <!--    <mapping resource="Account.hbm.xml"/>
+         <mapping resource="UserConnection.hbm.xml"/>
+         <mapping resource="Jobs.hbm.xml"/>
+         -->
+    <!--
+     <mapping class="org.springframework.social.showcase.jobseeker.Account"  ></mapping>   
+         
+   <mapping class="org.springframework.social.showcase.jobseeker.Jobs"  ></mapping>   
+      <mapping class="org.springframework.social.showcase.jobseeker.UserConnection" ></mapping>   
+  -->
+    <mapping resource="com/db/domain/Jobs.hbm.xml"/>
+    <mapping resource="com/db/domain/UserConnection.hbm.xml"/>
+    <mapping resource="com/db/domain/Account.hbm.xml"/>
+    <mapping class="com.db.domain.Account"/>
+    <mapping class="com.db.domain.UserConnectionId"/>
+    <mapping class="com.db.domain.Jobs"/>
+    <mapping class="com.db.domain.UserConnection"/>
+  </session-factory>
+</hibernate-configuration>

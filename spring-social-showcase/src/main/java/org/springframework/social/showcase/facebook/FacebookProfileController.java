@@ -28,16 +28,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class FacebookProfileController {
 
-    @Inject
-    private ConnectionRepository connectionRepository;
+  @Inject
+  private ConnectionRepository connectionRepository;
 
-    @RequestMapping(value = "/facebook", method = RequestMethod.GET)
-    public String home(Model model) {
-        Connection<Facebook> connection = connectionRepository.findPrimaryConnection(Facebook.class);
-        if (connection == null) {
-            return "redirect:/connect/facebook";
-        }
-        model.addAttribute("profile", connection.getApi().userOperations().getUserProfile());
-        return "facebook/profile";
+  @RequestMapping(value = "/facebook", method = RequestMethod.GET)
+  public String home(Model model) {
+    Connection<Facebook> connection = connectionRepository.findPrimaryConnection(Facebook.class);
+    if (connection == null) {
+      return "redirect:/connect/facebook";
     }
+    model.addAttribute("profile", connection.getApi().userOperations().getUserProfile());
+    return "facebook/profile";
+  }
 }

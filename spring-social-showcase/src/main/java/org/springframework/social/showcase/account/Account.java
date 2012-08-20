@@ -26,102 +26,102 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 public class Account extends User implements Principal {
 
-    private final String username;
-    private final String password;
-    private final String firstName;
-    private final String lastName;
-    private final String roleName;
-    private final int    enabled;
+  private final String username;
+  private final String password;
+  private final String firstName;
+  private final String lastName;
+  private final String roleName;
+  private final int enabled;
 
-    public String getRoleName() {
-        return roleName;
-    }
+  public String getRoleName() {
+    return roleName;
+  }
 
-    public Account(String username, String password, String firstName, String lastName, final String roleName, int enabled
-            ) {
-        super(username, "", new HashSet<GrantedAuthority>() {
-            {
-                add(new GrantedAuthorityImpl(roleName));
-            }
-        });
+  public Account(String username, String password, String firstName, String lastName, final String roleName, int enabled) {
+    super(username, "", new HashSet<GrantedAuthority>() {
+      {
+        add(new GrantedAuthorityImpl(roleName));
+      }
+    });
 
-        this.username = username;
+    this.username = username;
 
-        this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.roleName = roleName;
-        this.enabled = enabled;
-    }
+    this.password = password;
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.roleName = roleName;
+    this.enabled = enabled;
+  }
 
-    public Account(String username, String password, boolean enabled,
-            boolean accountNonExpired, boolean credentialsNonExpired,
-            boolean accountNonLocked, String firstName, String lastName, String roleName, Set<GrantedAuthority> authorities) {
-        super(username, password, enabled, accountNonExpired, credentialsNonExpired,
-                accountNonLocked, authorities);
-        this.username = username;
-        this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.roleName = roleName;
-        this.enabled = enabled==true?1:0;
-    }
+  public Account(String username, String password, boolean enabled,
+          boolean accountNonExpired, boolean credentialsNonExpired,
+          boolean accountNonLocked, String firstName, String lastName, String roleName, Set<GrantedAuthority> authorities) {
+    super(username, password, enabled, accountNonExpired, credentialsNonExpired,
+            accountNonLocked, authorities);
+    this.username = username;
+    this.password = password;
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.roleName = roleName;
+    this.enabled = enabled == true ? 1 : 0;
+  }
 
-    public String getUsername() {
-        return username;
-    }
+  public String getUsername() {
+    return username;
+  }
 
-    public String getPassword() {
-        return password;
-    }
+  public String getPassword() {
+    return password;
+  }
 
-    public String getFirstName() {
-        return firstName;
-    }
+  public String getFirstName() {
+    return firstName;
+  }
 
-    public String getLastName() {
-        return lastName;
-    }
+  public String getLastName() {
+    return lastName;
+  }
 
 //    @Override
 //    public String toString() {
 //        return this.username;
 //    }
-    public Collection<? extends GrantedAuthority> getAuthoritiesFromDB() {
-        Set< GrantedAuthority> authorities = new HashSet<GrantedAuthority>();
-        authorities.add(new GrantedAuthorityImpl(getRoleName()));
-        return authorities;
-    }
+  public Collection<? extends GrantedAuthority> getAuthoritiesFromDB() {
+    Set< GrantedAuthority> authorities = new HashSet<GrantedAuthority>();
+    authorities.add(new GrantedAuthorityImpl(getRoleName()));
+    return authorities;
+  }
 
-    @Override
-    public boolean isAccountNonExpired() {
-        //TODO
-        return true;
-    }
+  @Override
+  public boolean isAccountNonExpired() {
+    //TODO
+    return true;
+  }
 
-    @Override
-    public boolean isAccountNonLocked() {
-        //TODO
-        return true;
-    }
+  @Override
+  public boolean isAccountNonLocked() {
+    //TODO
+    return true;
+  }
 
-    @Override
-    public boolean isCredentialsNonExpired() {
-        //TODO
-        return true;
-    }
+  @Override
+  public boolean isCredentialsNonExpired() {
+    //TODO
+    return true;
+  }
 
-    @Override
-    public boolean isEnabled() {
-        //TODO
-        if(enabled ==1)
-        return true;
-        else
-            return false;
+  @Override
+  public boolean isEnabled() {
+    //TODO
+    if (enabled == 1) {
+      return true;
+    } else {
+      return false;
     }
+  }
 
-    @Override
-    public String getName() {
-        return getUsername();
-    }
+  @Override
+  public String getName() {
+    return getUsername();
+  }
 }

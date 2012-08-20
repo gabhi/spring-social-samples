@@ -37,51 +37,51 @@ import org.springframework.web.context.request.WebRequest;
 @Controller
 public class SignupController {
 
-    private final AccountRepository accountRepository;
+  private final AccountRepository accountRepository;
 
-    @Inject
-    public SignupController(AccountRepository accountRepository) {
-        this.accountRepository = accountRepository;
+  @Inject
+  public SignupController(AccountRepository accountRepository) {
+    this.accountRepository = accountRepository;
+  }
+
+  @RequestMapping(value = "/signup", method = RequestMethod.GET)
+  public SignupForm signupForm(WebRequest request) {
+    Connection<?> connection = ProviderSignInUtils.getConnection(request);
+    if (connection != null) {
+      request.setAttribute("message", new Message(MessageType.INFO, "Your " + StringUtils.capitalize(connection.getKey().getProviderId()) + " account is not associated with a Spring Social Showcase account. If you're new, please sign up."), WebRequest.SCOPE_REQUEST);
+      return SignupForm.fromProviderUser(connection.fetchUserProfile());
+    } else {
+      return new SignupForm();
     }
+  }
 
-    @RequestMapping(value = "/signup", method = RequestMethod.GET)
-    public SignupForm signupForm(WebRequest request) {
-        Connection<?> connection = ProviderSignInUtils.getConnection(request);
-        if (connection != null) {
-            request.setAttribute("message", new Message(MessageType.INFO, "Your " + StringUtils.capitalize(connection.getKey().getProviderId()) + " account is not associated with a Spring Social Showcase account. If you're new, please sign up."), WebRequest.SCOPE_REQUEST);
-            return SignupForm.fromProviderUser(connection.fetchUserProfile());
-        } else {
-            return new SignupForm();
-        }
+  @RequestMapping(value = "/signup", method = RequestMethod.POST)
+  public String signup(@Valid SignupForm form, BindingResult formBinding, WebRequest request) {
+    if (formBinding.hasErrors()) {
+      return null;
     }
+    Account account = createAccount(form, formBinding);
+    if (account != null) {
 
-    @RequestMapping(value = "/signup", method = RequestMethod.POST)
-    public String signup(@Valid SignupForm form, BindingResult formBinding, WebRequest request) {
-        if (formBinding.hasErrors()) {
-            return null;
-        }
-        Account account = createAccount(form, formBinding);
-        if (account != null) {
-
-            //TODO replace null with httpservletrequest
-            SignInUtils.signin(account.getUsername(), account, null);
-            ProviderSignInUtils.handlePostSignUp(account.getUsername(), request);
-            return "redirect:/";
-        }
-        return null;
+      //TODO replace null with httpservletrequest
+      SignInUtils.signin(account.getUsername(), account, null);
+      ProviderSignInUtils.handlePostSignUp(account.getUsername(), request);
+      return "redirect:/";
     }
+    return null;
+  }
 
-    // internal helpers
-    private Account createAccount(SignupForm form, BindingResult formBinding) {
-        try {
-            String roleName = "ROLE_TRAVELER";
-            int enabled =1;
-            Account account = new Account(form.getUsername(), form.getPassword(), form.getFirstName(), form.getLastName(), roleName,enabled);
-            accountRepository.createAccount(account);
-            return account;
-        } catch (UsernameAlreadyInUseException e) {
-            formBinding.rejectValue("username", "user.duplicateUsername", "already in use");
-            return null;
-        }
+  // internal helpers
+  private Account createAccount(SignupForm form, BindingResult formBinding) {
+    try {
+      String roleName = "ROLE_TRAVELER";
+      int enabled = 1;
+      Account account = new Account(form.getUsername(), form.getPassword(), form.getFirstName(), form.getLastName(), roleName, enabled);
+      accountRepository.createAccount(account);
+      return account;
+    } catch (UsernameAlreadyInUseException e) {
+      formBinding.rejectValue("username", "user.duplicateUsername", "already in use");
+      return null;
     }
+  }
 }

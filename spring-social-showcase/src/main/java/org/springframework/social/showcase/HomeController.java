@@ -15,6 +15,7 @@
  */
 package org.springframework.social.showcase;
 
+import com.mongodb.Mongo;
 import java.security.Principal;
 
 import javax.inject.Inject;
@@ -30,23 +31,28 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class HomeController {
 
-    private final Provider<ConnectionRepository> connectionRepositoryProvider;
-    private final AccountRepository accountRepository;
+  private final Provider<ConnectionRepository> connectionRepositoryProvider;
+  private final AccountRepository accountRepository;
+  @Inject
+  private final Mongo mongo;
 
-    @Inject
-    public HomeController(Provider<ConnectionRepository> connectionRepositoryProvider, AccountRepository accountRepository) {
-        this.connectionRepositoryProvider = connectionRepositoryProvider;
-        this.accountRepository = accountRepository;
-    }
+  @Inject
+  public HomeController(Provider<ConnectionRepository> connectionRepositoryProvider, AccountRepository accountRepository, Mongo mongo) {
+    this.connectionRepositoryProvider = connectionRepositoryProvider;
+    this.accountRepository = accountRepository;
+    this.mongo = mongo;
+  }
 
-    @RequestMapping("/")
-    public String home(Principal currentUser, Model model) {
-        model.addAttribute("connectionsToProviders", getConnectionRepository().findAllConnections());
-        model.addAttribute(accountRepository.findAccountByUsername(currentUser.getName()));
-        return "home";
-    }
+  @RequestMapping("/")
+  public String home(Principal currentUser, Model model) {
+    model.addAttribute("connectionsToProviders", getConnectionRepository().findAllConnections());
+    model.addAttribute("mongoDatabaseNames", mongo.getDatabaseNames());
 
-    private ConnectionRepository getConnectionRepository() {
-        return connectionRepositoryProvider.get();
-    }
+    model.addAttribute(accountRepository.findAccountByUsername(currentUser.getName()));
+    return "home";
+  }
+
+  private ConnectionRepository getConnectionRepository() {
+    return connectionRepositoryProvider.get();
+  }
 }

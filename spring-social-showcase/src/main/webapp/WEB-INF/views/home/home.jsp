@@ -4,7 +4,5 @@
 <%@ page session="false" %>
 
 <p>Welcome, <c:out value="${account.firstName}"/>!</p>
-<c:out value="${account.roleName}"/>
 
-<a href="<c:url value="/signout" />">Sign Out</a>
 

@@ -7,8 +7,8 @@
 <h3>Daily Twitter Trends</h3>
 
 <c:forEach items="${trends.trends}" var="trend">
-    <s:url value="/twitter/search" var="searchUrl">
-        <s:param name="query"><c:out value="${trend.query}" escapeXml="false"/></s:param>
-    </s:url>
-    <a href="${searchUrl}"><c:out value="${trend.query}" /></a><br/>
+  <s:url value="/twitter/search" var="searchUrl">
+    <s:param name="query"><c:out value="${trend.query}" escapeXml="false"/></s:param>
+  </s:url>
+  <a href="${searchUrl}"><c:out value="${trend.query}" /></a><br/>
 </c:forEach>

@@ -33,42 +33,42 @@ import org.springframework.web.context.request.NativeWebRequest;
 
 public class SimpleSignInAdapter implements SignInAdapter {
 
-    private final RequestCache requestCache;
-    private final AccountRepository accountRepository;
+  private final RequestCache requestCache;
+  private final AccountRepository accountRepository;
 
-    @Inject
-    public SimpleSignInAdapter(RequestCache requestCache, AccountRepository accountRepository) {
-        this.requestCache = requestCache;
-        this.accountRepository = accountRepository;
+  @Inject
+  public SimpleSignInAdapter(RequestCache requestCache, AccountRepository accountRepository) {
+    this.requestCache = requestCache;
+    this.accountRepository = accountRepository;
+  }
+
+  @Override
+  public String signIn(String localUserId, Connection<?> connection, NativeWebRequest request) {
+    //   Account userAccount =  jdbcAccountRepository.findAccountByUsername(localUserId);
+
+    // SignInUtils.signin(localUserId,userAccount);
+    // requestCache.getRequest(null, null)
+    System.out.print(accountRepository.findAccountByUsername(localUserId));
+    SignInUtils.signin(localUserId, accountRepository.findAccountByUsername(localUserId), request.getNativeRequest(HttpServletRequest.class));
+    return extractOriginalUrl(request);
+  }
+
+  private String extractOriginalUrl(NativeWebRequest request) {
+    HttpServletRequest nativeReq = request.getNativeRequest(HttpServletRequest.class);
+    HttpServletResponse nativeRes = request.getNativeResponse(HttpServletResponse.class);
+    SavedRequest saved = requestCache.getRequest(nativeReq, nativeRes);
+    if (saved == null) {
+      return null;
     }
+    requestCache.removeRequest(nativeReq, nativeRes);
+    removeAutheticationAttributes(nativeReq.getSession(false));
+    return saved.getRedirectUrl();
+  }
 
-    @Override
-    public String signIn(String localUserId, Connection<?> connection, NativeWebRequest request) {
-        //   Account userAccount =  jdbcAccountRepository.findAccountByUsername(localUserId);
-
-        // SignInUtils.signin(localUserId,userAccount);
-        // requestCache.getRequest(null, null)
-        System.out.print(accountRepository.findAccountByUsername(localUserId));
-        SignInUtils.signin(localUserId, accountRepository.findAccountByUsername(localUserId), request.getNativeRequest(HttpServletRequest.class));
-        return extractOriginalUrl(request);
+  private void removeAutheticationAttributes(HttpSession session) {
+    if (session == null) {
+      return;
     }
-
-    private String extractOriginalUrl(NativeWebRequest request) {
-        HttpServletRequest nativeReq = request.getNativeRequest(HttpServletRequest.class);
-        HttpServletResponse nativeRes = request.getNativeResponse(HttpServletResponse.class);
-        SavedRequest saved = requestCache.getRequest(nativeReq, nativeRes);
-        if (saved == null) {
-            return null;
-        }
-        requestCache.removeRequest(nativeReq, nativeRes);
-        removeAutheticationAttributes(nativeReq.getSession(false));
-        return saved.getRedirectUrl();
-    }
-
-    private void removeAutheticationAttributes(HttpSession session) {
-        if (session == null) {
-            return;
-        }
-        session.removeAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
-    }
+    session.removeAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
+  }
 }

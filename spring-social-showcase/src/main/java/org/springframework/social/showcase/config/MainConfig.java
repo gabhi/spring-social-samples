@@ -15,6 +15,12 @@
  */
 package org.springframework.social.showcase.config;
 
+import com.mongodb.DB;
+import com.mongodb.Mongo;
+import com.mongodb.MongoException;
+import java.net.UnknownHostException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.inject.Inject;
 import javax.sql.DataSource;
 
@@ -41,41 +47,53 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  */
 @Configuration
 @ComponentScan(basePackages = "org.springframework.social.showcase", excludeFilters = {
-    @Filter(Configuration.class)})
+  @Filter(Configuration.class)})
 @PropertySource("classpath:org/springframework/social/showcase/config/application.properties")
 @EnableTransactionManagement
 public class MainConfig {
 
-    @Inject
-    private Environment environment;
+  @Inject
+  private Environment environment;
 
-    @Bean(destroyMethod = "close")
-    public DataSource dataSource() {
-        BasicDataSource dataSource = new BasicDataSource();
-        dataSource.setDriverClassName(environment.getProperty("jdbc.driverClassName"));
-        dataSource.setUrl(environment.getProperty("jdbc.url"));
-        dataSource.setUsername(environment.getProperty("jdbc.username"));
-        dataSource.setPassword(environment.getProperty("jdbc.password"));
-        return dataSource;
+  @Bean(destroyMethod = "close")
+  public DataSource dataSource() {
+    BasicDataSource dataSource = new BasicDataSource();
+    dataSource.setDriverClassName(environment.getProperty("jdbc.driverClassName"));
+    dataSource.setUrl(environment.getProperty("jdbc.url"));
+    dataSource.setUsername(environment.getProperty("jdbc.username"));
+    dataSource.setPassword(environment.getProperty("jdbc.password"));
+    return dataSource;
+  }
+
+  @Bean
+  public Mongo mongo() {
+    try {
+      return new Mongo("localhost", 27017);
+    } catch (UnknownHostException ex) {
+      Logger.getLogger(MainConfig.class.getName()).log(Level.SEVERE, null, ex);
+    } catch (MongoException ex) {
+      Logger.getLogger(MainConfig.class.getName()).log(Level.SEVERE, null, ex);
     }
+    return null;
+  }
 
-    @Bean
-    public PlatformTransactionManager transactionManager() {
-        return new DataSourceTransactionManager(dataSource());
-    }
+  @Bean
+  public PlatformTransactionManager transactionManager() {
+    return new DataSourceTransactionManager(dataSource());
+  }
 
-    @Bean
-    public JdbcTemplate jdbcTemplate() {
-        return new JdbcTemplate(dataSource());
-    }
+  @Bean
+  public JdbcTemplate jdbcTemplate() {
+    return new JdbcTemplate(dataSource());
+  }
 
-    @Bean
-    public SessionFactory sessionFactory() {
+  @Bean
+  public SessionFactory sessionFactory() {
 
-        System.out.println("in the create session factory method");
-        return new AnnotationConfiguration().configure().buildSessionFactory();
+    System.out.println("in the create session factory method");
+    return new AnnotationConfiguration().configure().buildSessionFactory();
 
 
 
-    }
+  }
 }

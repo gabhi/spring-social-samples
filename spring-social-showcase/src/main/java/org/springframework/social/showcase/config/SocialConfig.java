@@ -24,7 +24,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
- import org.springframework.security.core.Authentication;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.encrypt.Encryptors;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -60,89 +60,89 @@ import org.springframework.social.twitter.connect.TwitterConnectionFactory;
 @Configuration
 public class SocialConfig {
 
-    @Inject
-    private Environment environment;
-    @Inject
-    private DataSource dataSource;
-    @Inject
-    private JdbcTemplate jdbcTemplate;
-    @Inject
-    private PasswordEncoder passwordEncoder;
-    @Inject
-    private AccountRepository accountrepository;
+  @Inject
+  private Environment environment;
+  @Inject
+  private DataSource dataSource;
+  @Inject
+  private JdbcTemplate jdbcTemplate;
+  @Inject
+  private PasswordEncoder passwordEncoder;
+  @Inject
+  private AccountRepository accountrepository;
 
-    @Bean
-    @Scope(value = "singleton", proxyMode = ScopedProxyMode.INTERFACES)
-    public ConnectionFactoryLocator connectionFactoryLocator() {
-        ConnectionFactoryRegistry registry = new ConnectionFactoryRegistry();
-        registry.addConnectionFactory(new TwitterConnectionFactory(environment.getProperty("twitter.consumerKey"),
-                environment.getProperty("twitter.consumerSecret")));
-        registry.addConnectionFactory(new FacebookConnectionFactory(environment.getProperty("facebook.clientId"),
-                environment.getProperty("facebook.clientSecret")));
-        registry.addConnectionFactory(new LinkedInConnectionFactory(environment.getProperty("linkedin.consumerKey"),
-                environment.getProperty("linkedin.consumerSecret")));
-        return registry;
-    }
+  @Bean
+  @Scope(value = "singleton", proxyMode = ScopedProxyMode.INTERFACES)
+  public ConnectionFactoryLocator connectionFactoryLocator() {
+    ConnectionFactoryRegistry registry = new ConnectionFactoryRegistry();
+    registry.addConnectionFactory(new TwitterConnectionFactory(environment.getProperty("twitter.consumerKey"),
+            environment.getProperty("twitter.consumerSecret")));
+    registry.addConnectionFactory(new FacebookConnectionFactory(environment.getProperty("facebook.clientId"),
+            environment.getProperty("facebook.clientSecret")));
+    registry.addConnectionFactory(new LinkedInConnectionFactory(environment.getProperty("linkedin.consumerKey"),
+            environment.getProperty("linkedin.consumerSecret")));
+    return registry;
+  }
 
-    @Bean
-    @Scope(value = "singleton", proxyMode = ScopedProxyMode.INTERFACES)
-    public UsersConnectionRepository usersConnectionRepository() {
-        return new JdbcUsersConnectionRepository(dataSource, connectionFactoryLocator(), Encryptors.noOpText());
-    }
+  @Bean
+  @Scope(value = "singleton", proxyMode = ScopedProxyMode.INTERFACES)
+  public UsersConnectionRepository usersConnectionRepository() {
+    return new JdbcUsersConnectionRepository(dataSource, connectionFactoryLocator(), Encryptors.noOpText());
+  }
 
-    @Bean
-    @Scope(value = "singleton", proxyMode = ScopedProxyMode.INTERFACES)
-    public JdbcAccountRepository jdbcAccountRepository() {
-        return new JdbcAccountRepository(jdbcTemplate, passwordEncoder);
-    }
+  @Bean
+  @Scope(value = "singleton", proxyMode = ScopedProxyMode.INTERFACES)
+  public JdbcAccountRepository jdbcAccountRepository() {
+    return new JdbcAccountRepository(jdbcTemplate, passwordEncoder);
+  }
 
-    @Bean
-    @Scope(value = "request", proxyMode = ScopedProxyMode.INTERFACES)
-    public ConnectionRepository connectionRepository() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication == null) {
-            throw new IllegalStateException("Unable to get a ConnectionRepository: no user signed in");
-        }
-        System.out.println("authentication.getName():: " + authentication.getName());
-        return usersConnectionRepository().createConnectionRepository(authentication.getName());
+  @Bean
+  @Scope(value = "request", proxyMode = ScopedProxyMode.INTERFACES)
+  public ConnectionRepository connectionRepository() {
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    if (authentication == null) {
+      throw new IllegalStateException("Unable to get a ConnectionRepository: no user signed in");
     }
+    System.out.println("authentication.getName():: " + authentication.getName());
+    return usersConnectionRepository().createConnectionRepository(authentication.getName());
+  }
 
-    @Bean
-    @Scope(value = "request", proxyMode = ScopedProxyMode.INTERFACES)
-    public Facebook facebook() {
-        Connection<Facebook> facebook = connectionRepository().findPrimaryConnection(Facebook.class);
-        return facebook != null ? facebook.getApi() : new FacebookTemplate();
-    }
+  @Bean
+  @Scope(value = "request", proxyMode = ScopedProxyMode.INTERFACES)
+  public Facebook facebook() {
+    Connection<Facebook> facebook = connectionRepository().findPrimaryConnection(Facebook.class);
+    return facebook != null ? facebook.getApi() : new FacebookTemplate();
+  }
 
-    @Bean
-    @Scope(value = "request", proxyMode = ScopedProxyMode.INTERFACES)
-    public Twitter twitter() {
-        Connection<Twitter> twitter = connectionRepository().findPrimaryConnection(Twitter.class);
-        return twitter != null ? twitter.getApi() : new TwitterTemplate();
-    }
+  @Bean
+  @Scope(value = "request", proxyMode = ScopedProxyMode.INTERFACES)
+  public Twitter twitter() {
+    Connection<Twitter> twitter = connectionRepository().findPrimaryConnection(Twitter.class);
+    return twitter != null ? twitter.getApi() : new TwitterTemplate();
+  }
 
-    @Bean
-    @Scope(value = "request", proxyMode = ScopedProxyMode.INTERFACES)
-    public LinkedIn linkedin() {
-        Connection<LinkedIn> linkedin = connectionRepository().findPrimaryConnection(LinkedIn.class);
-        return linkedin != null ? linkedin.getApi() : null;
-    }
+  @Bean
+  @Scope(value = "request", proxyMode = ScopedProxyMode.INTERFACES)
+  public LinkedIn linkedin() {
+    Connection<LinkedIn> linkedin = connectionRepository().findPrimaryConnection(LinkedIn.class);
+    return linkedin != null ? linkedin.getApi() : null;
+  }
 
-    @Bean
-    public ConnectController connectController() {
-        ConnectController connectController = new ConnectController(connectionFactoryLocator(), connectionRepository());
-        connectController.addInterceptor(new PostToWallAfterConnectInterceptor());
-        connectController.addInterceptor(new TweetAfterConnectInterceptor());
-        return connectController;
-    }
+  @Bean
+  public ConnectController connectController() {
+    ConnectController connectController = new ConnectController(connectionFactoryLocator(), connectionRepository());
+    connectController.addInterceptor(new PostToWallAfterConnectInterceptor());
+    connectController.addInterceptor(new TweetAfterConnectInterceptor());
+    return connectController;
+  }
 
-    @Bean
-    public ProviderSignInController providerSignInController(RequestCache requestCache) {
-        return new ProviderSignInController(connectionFactoryLocator(), usersConnectionRepository(), new SimpleSignInAdapter(requestCache, accountrepository));
-    }
+  @Bean
+  public ProviderSignInController providerSignInController(RequestCache requestCache) {
+    return new ProviderSignInController(connectionFactoryLocator(), usersConnectionRepository(), new SimpleSignInAdapter(requestCache, accountrepository));
+  }
 
-    @Bean
-    public DisconnectController disconnectController() {
-        return new DisconnectController(usersConnectionRepository(), environment.getProperty("facebook.clientSecret"));
-    }
+  @Bean
+  public DisconnectController disconnectController() {
+    return new DisconnectController(usersConnectionRepository(), environment.getProperty("facebook.clientSecret"));
+  }
 }

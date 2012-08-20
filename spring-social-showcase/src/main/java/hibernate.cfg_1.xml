@@ -22,9 +22,9 @@
     <!--
      <mapping class="org.springframework.social.showcase.jobseeker.Account"  ></mapping>   
          
-   <mapping class="org.springframework.social.showcase.jobseeker.Jobs"  ></mapping>   
-      <mapping class="org.springframework.social.showcase.jobseeker.UserConnection" ></mapping>   
-  -->
+     <mapping class="org.springframework.social.showcase.jobseeker.Jobs"  ></mapping>   
+        <mapping class="org.springframework.social.showcase.jobseeker.UserConnection" ></mapping>   
+    -->
     <mapping resource="com/db/domain/Jobs.hbm.xml"/>
     <mapping resource="com/db/domain/UserConnection.hbm.xml"/>
     <mapping resource="com/db/domain/Account.hbm.xml"/>

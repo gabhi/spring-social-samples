@@ -32,13 +32,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @ImportResource("classpath:org/springframework/social/showcase/config/security.xml")
 public class SecurityConfig {
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return NoOpPasswordEncoder.getInstance();
-    }
+  @Bean
+  public PasswordEncoder passwordEncoder() {
+    return NoOpPasswordEncoder.getInstance();
+  }
 
-    @Bean
-    public TextEncryptor textEncryptor() {
-        return Encryptors.noOpText();
-    }
+  @Bean
+  public TextEncryptor textEncryptor() {
+    return Encryptors.noOpText();
+  }
 }

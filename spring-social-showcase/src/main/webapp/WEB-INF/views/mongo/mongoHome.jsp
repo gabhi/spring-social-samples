@@ -3,10 +3,12 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf" %>
 <%@ page session="false" %>
 
-<h3>Your Facebook Photo Albums</h3>
 
-<ul class="albums">
-  <c:forEach items="${albums}" var="album">
-    <li><a href="<c:url value="/facebook/album/${album.id}"/>"><c:out value="${album.name}"/></a></li>
+Please Select one of the following databases: <br />
+<ol>
+  <c:forEach items="${mongoDatabaseNames}" var="dbName">
+
+    <li><c:out value="${dbName}" /> </li>
   </c:forEach>
-</ul>
+</ol>
+

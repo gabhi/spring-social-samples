@@ -26,16 +26,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class FacebookFriendsController {
 
-    private final Facebook facebook;
+  private final Facebook facebook;
 
-    @Inject
-    public FacebookFriendsController(Facebook facebook) {
-        this.facebook = facebook;
-    }
+  @Inject
+  public FacebookFriendsController(Facebook facebook) {
+    this.facebook = facebook;
+  }
 
-    @RequestMapping(value = "/facebook/friends", method = RequestMethod.GET)
-    public String showFeed(Model model) {
-        model.addAttribute("friends", facebook.friendOperations().getFriendProfiles());
-        return "facebook/friends";
-    }
+  @RequestMapping(value = "/facebook/friends", method = RequestMethod.GET)
+  public String showFeed(Model model) {
+    model.addAttribute("friends", facebook.friendOperations().getFriendProfiles());
+    return "facebook/friends";
+  }
 }

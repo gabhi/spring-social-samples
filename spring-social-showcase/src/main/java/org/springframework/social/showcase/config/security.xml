@@ -5,28 +5,28 @@
              xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
 
-    <http pattern="/resources/**" security="none" />
+  <http pattern="/resources/**" security="none" />
 
-    <http use-expressions="true">
-        <!-- Authentication policy -->
-        <form-login login-page="/signin" login-processing-url="/signin/authenticate" authentication-failure-url="/signin?param.error=bad_credentials" />
-        <logout logout-url="/signout" delete-cookies="JSESSIONID" />
-        <intercept-url pattern="/favicon.ico" access="permitAll" />
-        <intercept-url pattern="/resources/**" access="permitAll" />
-        <intercept-url pattern="/signin/**" access="permitAll" />
-        <intercept-url pattern="/signup/**" access="permitAll" />
-        <intercept-url pattern="/disconnect/facebook" access="permitAll" />
-        <intercept-url pattern="/**" access="isAuthenticated()"  />
-    </http>
+  <http use-expressions="true">
+    <!-- Authentication policy -->
+    <form-login login-page="/signin" login-processing-url="/signin/authenticate" authentication-failure-url="/signin?param.error=bad_credentials" />
+    <logout logout-url="/signout" delete-cookies="JSESSIONID" />
+    <intercept-url pattern="/favicon.ico" access="permitAll" />
+    <intercept-url pattern="/resources/**" access="permitAll" />
+    <intercept-url pattern="/signin/**" access="permitAll" />
+    <intercept-url pattern="/signup/**" access="permitAll" />
+    <intercept-url pattern="/disconnect/facebook" access="permitAll" />
+    <intercept-url pattern="/**" access="isAuthenticated()"  />
+  </http>
 
-    <authentication-manager alias="authenticationManager">
-        <authentication-provider>
-            <password-encoder ref="passwordEncoder" />
-            <jdbc-user-service data-source-ref="dataSource" 
+  <authentication-manager alias="authenticationManager">
+    <authentication-provider>
+      <password-encoder ref="passwordEncoder" />
+      <jdbc-user-service data-source-ref="dataSource" 
                                users-by-username-query="select username, password, enabled from Account where username = ?"
                                authorities-by-username-query="select username, roleName from Account where username = ?"/>
-        </authentication-provider>
-    </authentication-manager>
+    </authentication-provider>
+  </authentication-manager>
     
     
 	

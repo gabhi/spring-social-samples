@@ -30,37 +30,36 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 public class JdbcAccountRepository implements AccountRepository {
 
-    private final JdbcTemplate jdbcTemplate;
-    private final PasswordEncoder passwordEncoder;
+  private final JdbcTemplate jdbcTemplate;
+  private final PasswordEncoder passwordEncoder;
 
-    @Inject
-    public JdbcAccountRepository(JdbcTemplate jdbcTemplate, PasswordEncoder passwordEncoder) {
-        this.jdbcTemplate = jdbcTemplate;
-        this.passwordEncoder = passwordEncoder;
+  @Inject
+  public JdbcAccountRepository(JdbcTemplate jdbcTemplate, PasswordEncoder passwordEncoder) {
+    this.jdbcTemplate = jdbcTemplate;
+    this.passwordEncoder = passwordEncoder;
+  }
+
+  @Transactional
+  public void createAccount(Account user) throws UsernameAlreadyInUseException {
+    try {
+      jdbcTemplate.update(
+              "insert into Account (firstName, lastName, username, password) values (?, ?, ?, ?)",
+              user.getFirstName(), user.getLastName(), user.getUsername(),
+              passwordEncoder.encode(user.getPassword()));
+    } catch (DuplicateKeyException e) {
+      throw new UsernameAlreadyInUseException(user.getUsername());
     }
+  }
 
-    @Transactional
-    public void createAccount(Account user) throws UsernameAlreadyInUseException {
-        try {
-            jdbcTemplate.update(
-                    "insert into Account (firstName, lastName, username, password) values (?, ?, ?, ?)",
-                    user.getFirstName(), user.getLastName(), user.getUsername(),
-                    passwordEncoder.encode(user.getPassword()));
-        } catch (DuplicateKeyException e) {
-            throw new UsernameAlreadyInUseException(user.getUsername());
-        }
-    }
-
-    @Override
-    public Account findAccountByUsername(String username) {
-        System.out.println("in the findAccountByUsername: " + username);
-        return jdbcTemplate.queryForObject("select username, firstName, lastName, roleName,enabled from Account where username = ?",
-                new RowMapper<Account>() {
-                    public Account mapRow(ResultSet rs, int rowNum) throws SQLException {
-                        return new Account(rs.getString("username"), null, rs.getString("firstName"), rs
-                                .getString("lastName"), rs.getString("roleName"),rs.getInt("enabled"));
-                    }
-                }, username);
-    }
-
+  @Override
+  public Account findAccountByUsername(String username) {
+    System.out.println("in the findAccountByUsername: " + username);
+    return jdbcTemplate.queryForObject("select username, firstName, lastName, roleName,enabled from Account where username = ?",
+            new RowMapper<Account>() {
+              public Account mapRow(ResultSet rs, int rowNum) throws SQLException {
+                return new Account(rs.getString("username"), null, rs.getString("firstName"), rs
+                        .getString("lastName"), rs.getString("roleName"), rs.getInt("enabled"));
+              }
+            }, username);
+  }
 }

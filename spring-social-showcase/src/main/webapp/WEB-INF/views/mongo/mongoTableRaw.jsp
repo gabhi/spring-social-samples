@@ -32,9 +32,9 @@ ${dbCollectionrows}<br />
 Data type: ${dataType}
 
 <c:forEach items="${dbCollectionrows}" var="row">
+    <li><a href="<c:url value="/mongo/database/${currentDbName}/${collectionName}/id/${row._id}"/>">${row._id}</a></li>
 
-    <li>${row._id}</li>
-
+ 
 </c:forEach>
 
 

@@ -22,10 +22,14 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
+import com.mongodb.DBObject;
 import com.mongodb.Mongo;
 import com.mongodb.MongoException;
+import java.util.Iterator;
+import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Provider;
+import org.bson.types.ObjectId;
 
 import org.springframework.social.connect.ConnectionRepository;
 import org.springframework.social.showcase.account.Account;
@@ -94,7 +98,72 @@ public class MongoController {
     model.addAttribute("currentCollection", collectionName);
 
 
+    //stats
+    if ("stats".equals(type)) {
+      model.addAttribute("dbCount", dbCollection.getCount());
+      model.addAttribute("dbIndexInfo", dbCollection.getIndexInfo());
+
+      model.addAttribute("dbStats", dbCollection.getStats());
+      model.addAttribute("dbFullName", dbCollection.getFullName());
+      model.addAttribute("dbOptions", dbCollection.getOptions());
+      model.addAttribute("dbWriteConcern", dbCollection.getWriteConcern());
+    }
+
+    //End of stats
+    if ("id".equals(type)) {
+      System.out.println("id=" + type);
+      BasicDBObject query = new BasicDBObject();
+      query.put("id", "4f473b300364c27d3cd69ddf");
+      model.addAttribute("dbCollectionrows", dbCollection.find(query));
+      System.out.println("count=" + dbCollection.find(query).count());
+
+    }
+
+
+
     model.addAttribute("collectionNames", db.getCollectionNames());
-    return "mongo/table";
+    return "mongo/table/" + type;
+  }
+  
+  
+  @RequestMapping(value = "/mongo/database/{dbName}/{collectionName}/{type}/{idVal}", method = RequestMethod.GET)
+  public String showCollection(@PathVariable("dbName") String dbName, @PathVariable("collectionName") String collectionName, @PathVariable("type") String type, @PathVariable("idVal") String idVal, Model model) {
+    model.addAttribute("mongoDatabaseNames", mongo.getDatabaseNames());
+
+    DB db = mongo.getDB(dbName);
+    DBCollection dbCollection = db.getCollection(collectionName);
+
+    model.addAttribute("currentDbName", dbName);
+    model.addAttribute("dbCollection", dbCollection);
+    model.addAttribute("dbCollectionrows", dbCollection.find());
+    model.addAttribute("dataType", type);
+    model.addAttribute("currentCollection", collectionName);
+
+
+    //stats
+    if ("stats".equals(type)) {
+      model.addAttribute("dbCount", dbCollection.getCount());
+      model.addAttribute("dbIndexInfo", dbCollection.getIndexInfo());
+
+      model.addAttribute("dbStats", dbCollection.getStats());
+      model.addAttribute("dbFullName", dbCollection.getFullName());
+      model.addAttribute("dbOptions", dbCollection.getOptions());
+      model.addAttribute("dbWriteConcern", dbCollection.getWriteConcern());
+    }
+
+    //End of stats
+    if ("id".equals(type)) {
+      System.out.println("id=" + type);
+      DBObject searchById = new BasicDBObject("_id", new ObjectId(idVal));
+
+       model.addAttribute("dbCollectionrows", dbCollection.find(searchById));
+      System.out.println("count=" + dbCollection.find(searchById).count());
+
+    }
+
+
+
+    model.addAttribute("collectionNames", db.getCollectionNames());
+    return "mongo/table/" + type;
   }
 }

@@ -14,5 +14,19 @@
   <definition name="mongo/table" extends="page">
     <put-attribute name="content" value="/WEB-INF/views/mongo/mongoTable.jsp" />
   </definition>
-
+  
+  <definition name="mongo/table/stats" extends="page">
+    <put-attribute name="content" value="/WEB-INF/views/mongo/mongoTableStats.jsp" />
+  </definition>
+  <definition name="mongo/table/raw" extends="page">
+    <put-attribute name="content" value="/WEB-INF/views/mongo/mongoTableRaw.jsp" />
+  </definition>
+  
+  <definition name="mongo/table/tabular" extends="page">
+    <put-attribute name="content" value="/WEB-INF/views/mongo/mongoTable.jsp" />
+  </definition>
+  
+   <definition name="mongo/table/id" extends="page">
+    <put-attribute name="content" value="/WEB-INF/views/mongo/mongoTableRaw.jsp" />
+  </definition>
 </tiles-definitions>

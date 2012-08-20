@@ -1,7 +1,4 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-<%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf" %>
-<%@ page session="false" %>
+
 
 
 <ul class="nav nav-tabs">
@@ -22,21 +19,6 @@
     </c:if>
     ><a href="<c:url value="/mongo/database/${currentDbName}/${currentCollection}/stats"/>"> Stats</a></li>
 </ul>
-
-
-              <tiles:insertTemplate template="/WEB-INF/views/mongo/mongoMenu.jsp" flush="true" />
-
-
-Collections from the <a href="<c:url value="/mongo/database/${currentDbName}"/>">${currentDbName}</a><br />
-${dbCollectionrows}<br />
-Data type: ${dataType}
-
-<c:forEach items="${dbCollectionrows}" var="row">
-
-    <li>${row._id}</li>
-
-</c:forEach>
-
 
 
 

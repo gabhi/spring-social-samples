@@ -22,20 +22,47 @@
     </c:if>
     ><a href="<c:url value="/mongo/database/${currentDbName}/${currentCollection}/stats"/>"> Stats</a></li>
 </ul>
-
-
               <tiles:insertTemplate template="/WEB-INF/views/mongo/mongoMenu.jsp" flush="true" />
 
 
 Collections from the <a href="<c:url value="/mongo/database/${currentDbName}"/>">${currentDbName}</a><br />
-${dbCollectionrows}<br />
-Data type: ${dataType}
 
-<c:forEach items="${dbCollectionrows}" var="row">
 
-    <li>${row._id}</li>
+<table border="1">
+  <tr>
+    <td>dbCount</td>
+    <td>${dbCount}</td>
+  </tr>
+  <tr>
+    <td>dbIndexInfo</td>
+    <td>${dbIndexInfo}
 
-</c:forEach>
+
+
+    </td>
+  </tr><tr>
+    <td>dbStats</td>
+    <td>
+      <table> 
+        <c:forEach items="${dbStats}" var="stats">
+          <tr>
+            <td>${stats.key}</td>
+            <td>${stats.value}</td>
+          </tr>
+        </c:forEach>
+      </table>
+    </td>
+  </tr><tr>
+    <td>dbFullName</td>
+    <td>${dbFullName}</td>
+  </tr><tr>
+    <td>dbOptions</td>
+    <td>${dbOptions}</td>
+  </tr><tr>
+    <td>dbWriteConcern</td>
+    <td>${dbWriteConcern}</td>
+  </tr>
+</table>
 
 
 

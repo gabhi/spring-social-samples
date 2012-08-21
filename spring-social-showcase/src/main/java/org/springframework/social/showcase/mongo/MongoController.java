@@ -79,12 +79,12 @@ public class MongoController {
     return "mongo/database";
   }
 
-  @RequestMapping(value = "/mongo/database/{dbName}/{collectionName}", method = RequestMethod.GET)
+  @RequestMapping(value = "/mongo/database/{dbName}/{collectionName:.+}", method = RequestMethod.GET)
   public String showCollection(@PathVariable("dbName") String dbName, @PathVariable("collectionName") String collectionName, Model model) {
     return showCollection(dbName, collectionName, "raw", model);
   }
 
-  @RequestMapping(value = "/mongo/database/{dbName}/{collectionName}/{type}", method = RequestMethod.GET)
+  @RequestMapping(value = "/mongo/database/{dbName}/{collectionName:.+}/{type}", method = RequestMethod.GET)
   public String showCollection(@PathVariable("dbName") String dbName, @PathVariable("collectionName") String collectionName, @PathVariable("type") String type, Model model) {
     model.addAttribute("mongoDatabaseNames", mongo.getDatabaseNames());
 
@@ -126,7 +126,7 @@ public class MongoController {
   }
   
   
-  @RequestMapping(value = "/mongo/database/{dbName}/{collectionName}/{type}/{idVal}", method = RequestMethod.GET)
+  @RequestMapping(value = "/mongo/database/{dbName}/{collectionName:.+}/{type}/{idVal}", method = RequestMethod.GET)
   public String showCollection(@PathVariable("dbName") String dbName, @PathVariable("collectionName") String collectionName, @PathVariable("type") String type, @PathVariable("idVal") String idVal, Model model) {
     model.addAttribute("mongoDatabaseNames", mongo.getDatabaseNames());
 

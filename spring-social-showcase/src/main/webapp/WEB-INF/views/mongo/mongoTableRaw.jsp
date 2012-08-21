@@ -30,11 +30,29 @@
 
 
 Collections from the <a href="<c:url value="/mongo/database/${currentDbName}"/>">${currentDbName}</a><br />
-${dbCollectionrows}<br />
-Data type: ${dataType}
+  
+<c:forEach items="${dbCollectionrows}" var="row" varStatus="gC">
 
-<c:forEach items="${dbCollectionrows}" var="row">
-  <li><a href="#" onclick="showHide('row_${row._id}');">${row._id}</a></li>
+ <c:choose>
+                <c:when test="${empty row._id}">
+                                 <li><a href="#" onclick="showHide('table_${gC.index}');">${gC.index}</a></li>
+  <div id="table_${gC.index}" style="display:none">
+
+ <table class="table table-striped table-bordered">
+      <c:forEach items="${row}" var="rowelement">
+        <tr>
+          <td>${rowelement.key}  </td>
+          <td>
+           
+
+            ${rowelement.value}</td>
+        </tr>
+      </c:forEach>
+    </table>
+  </div>
+                 </c:when>
+                <c:otherwise>
+                 <li><a href="#" onclick="showHide('row_${row._id}');">${row._id}</a></li>
   <div id="row_${row._id}" style="display:none">
     <table class="table table-striped table-bordered">
       <c:forEach items="${row}" var="rowelement">
@@ -48,6 +66,12 @@ Data type: ${dataType}
       </c:forEach>
     </table>
   </div>
+
+                </c:otherwise>
+              </c:choose>
+
+
+  
 </c:forEach>
 
 

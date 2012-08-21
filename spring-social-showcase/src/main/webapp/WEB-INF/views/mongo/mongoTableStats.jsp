@@ -28,7 +28,7 @@
 Collections from the <a href="<c:url value="/mongo/database/${currentDbName}"/>">${currentDbName}</a><br />
 
 
-<table border="1">
+    <table class="table table-striped table-bordered">
   <tr>
     <td>dbCount</td>
     <td>${dbCount}</td>
@@ -43,7 +43,7 @@ Collections from the <a href="<c:url value="/mongo/database/${currentDbName}"/>"
   </tr><tr>
     <td>dbStats</td>
     <td>
-      <table> 
+    <table class="table table-striped table-bordered">
         <c:forEach items="${dbStats}" var="stats">
           <tr>
             <td>${stats.key}</td>

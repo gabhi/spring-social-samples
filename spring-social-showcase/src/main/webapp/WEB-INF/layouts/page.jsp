@@ -76,15 +76,11 @@
 
     <div class="container-fluid">
       <div class="row-fluid">
-        <div class="span3">
-          <div class="well sidebar-nav">
-            <ul class="nav nav-list">
-              <tiles:insertTemplate template="menu.jsp" />
+
+        <tiles:insertTemplate template="menu.jsp" />
 
 
-            </ul>
-          </div><!--/.well -->
-        </div><!--/span-->
+
         <div class="span9">
           <div class="hero-unit">
 

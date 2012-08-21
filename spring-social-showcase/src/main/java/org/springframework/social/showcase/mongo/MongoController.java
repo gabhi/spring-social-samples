@@ -92,6 +92,8 @@ public class MongoController {
     DBCollection dbCollection = db.getCollection(collectionName);
 
     model.addAttribute("currentDbName", dbName);
+    model.addAttribute("dbStats", db.getStats());
+     
     model.addAttribute("dbCollection", dbCollection);
    // model.addAttribute("dbCollectionrows", com.mongodb.util.JSON.serialize(dbCollection.find()));
      model.addAttribute("dbCollectionrows", dbCollection.find());

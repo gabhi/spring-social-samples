@@ -11,14 +11,18 @@
  <div class="modal hide fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
-    <h3 id="myModalLabel">Modal header</h3>
+    <h3 id="myModalLabel">${fn:toUpperCase(currentDbName)} Stats</h3>
   </div>
   <div class="modal-body">
-    <p>One fine body</p>
+    <p>
+<c:forEach items="${dbStats}" var="dbstat">
+${dbstat}
+
+</c:forEach>
+    	 </p>
   </div>
   <div class="modal-footer">
     <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-    <button class="btn btn-primary">Save changes</button>
   </div>
 </div>
  

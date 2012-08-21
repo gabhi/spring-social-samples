@@ -15,8 +15,12 @@
 
       Databases: <br />
 
-      <c:forEach items="${mongoDatabaseNames}" var="dbName">
-        <li><a href="<c:url value="/mongo/database/${dbName}"/>">${dbName}</a></li>
+      <c:forEach items="${mongoDatabaseNames}" var="loopDbName">
+        <li 
+<c:if test = "${dbName == loopDbName}">     
+      class="active"
+    </c:if>
+        ><a href="<c:url value="/mongo/database/${loopDbName}"/>">${loopDbName}</a></li>
 
       </c:forEach>
 
@@ -32,7 +36,11 @@
 
       Collections in the <b><a href="<c:url value="/mongo/database/${dbName}"/>">${dbName}</a></b><br />
       <c:forEach items="${collectionNames}" var="collectionName">
-        <li><a href="<c:url value="/mongo/database/${currentDbName}/${collectionName}"/>">${collectionName}</a></li>
+        <li
+<c:if test = "${collectionName == currentCollection}">     
+      class="active"
+    </c:if>
+        ><a href="<c:url value="/mongo/database/${currentDbName}/${collectionName}"/>">${collectionName}</a></li>
 
       </c:forEach>
 

@@ -4,16 +4,29 @@
 <%@ page session="false" %>
 
 
-Collections from the <a href="<c:url value="/mongo/database/${currentDbName}"/>">${currentDbName}</a><br />
-<ol>
 
+
+<form>
+  <legend>Collections from the <a href="<c:url value="/mongo/database/${currentDbName}"/>">${currentDbName}</a></legend>
 
   <c:forEach items="${collectionNames}" var="collectionName">
-    <li><a href="<c:url value="/mongo/database/${currentDbName}/${collectionName}"/>">${collectionName}</a></li>
+
+
+
+
+    <label class="checkbox">
+      <input type="checkbox"> <a href="<c:url value="/mongo/database/${currentDbName}/${collectionName}"/>">${collectionName}</a>
+    </label>
+
 
   </c:forEach>
 
-</ol>
+
+  <button type="submit" class="btn">Drop</button>
+</form>
+
+
+
 
 
 

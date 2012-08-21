@@ -4,6 +4,7 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 
 
@@ -17,10 +18,10 @@
 
       <c:forEach items="${mongoDatabaseNames}" var="loopDbName">
         <li 
-<c:if test = "${dbName == loopDbName}">     
-      class="active"
-    </c:if>
-        ><a href="<c:url value="/mongo/database/${loopDbName}"/>">${loopDbName}</a></li>
+          <c:if test = "${dbName == loopDbName}">     
+            class="active"
+          </c:if>
+          ><a href="<c:url value="/mongo/database/${loopDbName}"/>">${fn:toUpperCase(loopDbName)}</a></li>
 
       </c:forEach>
 
@@ -34,13 +35,13 @@
     <ul class="nav nav-list">
 
 
-      Collections in the <b><a href="<c:url value="/mongo/database/${dbName}"/>">${dbName}</a></b><br />
+      Collections in the <b><a href="<c:url value="/mongo/database/${dbName}"/>">${fn:toUpperCase(dbName)}</a></b><br />
       <c:forEach items="${collectionNames}" var="collectionName">
         <li
-<c:if test = "${collectionName == currentCollection}">     
-      class="active"
-    </c:if>
-        ><a href="<c:url value="/mongo/database/${currentDbName}/${collectionName}"/>">${collectionName}</a></li>
+          <c:if test = "${collectionName == currentCollection}">     
+            class="active"
+          </c:if>
+          ><a href="<c:url value="/mongo/database/${currentDbName}/${collectionName}"/>">${fn:toUpperCase(collectionName)}</a></li>
 
       </c:forEach>
 
